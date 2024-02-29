@@ -1,0 +1,89 @@
+ext {
+    // 是否单独运行某个module
+    isModule = false
+
+    signingConfig = [
+            storePassword: 'xxx',
+            keyAlias     : 'xxx',
+            keyPassword  : 'xxx'
+    ]
+
+    android = [
+            applicationId    : "com.bdtx.main",
+            // 33有bug,xml写代码没有代码提示
+            compileSdk       : 32,
+            buildToolsVersion: '32.0.0',
+            minSdk           : 26,
+            targetSdk        : 32,
+
+            versionCode      : 1,
+            versionName      : "1.0.0",
+    ]
+
+    dependVersion = [
+            mmkvVersion           : '1.2.15',
+            aroutreApiVersion     : '1.5.2',
+            arouterCompilerVersion: '1.5.2',
+            greendaoVersion       : '3.3.0',
+            rxPermissionsVersion    : '0.12',
+            rxjavaVersion         : '3.1.6',
+            rxandroidVersion      : '3.0.2',
+            eventbusVersion       : '3.2.0',
+
+            okhttp3LogVersion     : '3.11.0',
+            okhttp3Version        : '3.14.9',
+            okioVersion           : '2.4.0',
+
+            multidexVersion       : '2.0.1',
+            retrofitVersion       : '2.9.0',
+            retrofitGsonVersion   : '2.4.0',
+            gsonVersion           : '2.10.1',
+    ]
+
+    depsLibs = [
+            coreKtx           : 'androidx.core:core-ktx:1.7.0',
+            appcompat         : 'androidx.appcompat:appcompat:1.3.0',
+            material          : 'com.google.android.material:material:1.4.0',
+            constraintlayout  : 'androidx.constraintlayout:constraintlayout:2.0.4',
+            junit             : 'junit:junit:4.13.2',
+            extJunit          : 'androidx.test.ext:junit:1.1.3',
+            espressoCore      : 'androidx.test.espresso:espresso-core:3.4.0',
+
+            viewModel         : 'androidx.lifecycle:lifecycle-viewmodel:2.3.1',
+            liveData          : 'androidx.lifecycle:lifecycle-livedata:2.3.1',
+            viewModelKtx      : 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1',
+            liveDataKtx       : 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1',
+
+            activity          : 'androidx.activity:activity:1.3.1',
+            activityKtx       : 'androidx.activity:activity-ktx:1.3.1',
+
+
+            navigationFragment: 'androidx.navigation:navigation-fragment-ktx:2.3.5',
+            navigationUI      : 'androidx.navigation:navigation-ui-ktx:2.3.5',
+            lifecycleCommon   : 'androidx.lifecycle:lifecycle-common:2.5.0-beta01',
+
+            // MMKV（强化版SharedPreferences）
+            mmkv              : "com.tencent:mmkv:${dependVersion["mmkvVersion"]}",
+            // 路由
+            aroutreApi        : "com.alibaba:arouter-api:${dependVersion["aroutreApiVersion"]}",
+            arouterCompiler   : "com.alibaba:arouter-compiler:${dependVersion["arouterCompilerVersion"]}",
+            // greendao 数据库
+            greendao          : "org.greenrobot:greendao:${dependVersion["greendaoVersion"]}",
+            // rxPermission 权限处理
+            rxPermission      : "com.github.tbruyelle:rxpermissions:${dependVersion["rxPermissionsVersion"]}",
+            rxjava            : "io.reactivex.rxjava3:rxjava:${dependVersion["rxjavaVersion"]}",
+            rxandroid         : "io.reactivex.rxjava3:rxandroid:${dependVersion["rxandroidVersion"]}",
+            // eventbus
+            eventbus          : "org.greenrobot:eventbus:${dependVersion["eventbusVersion"]}",
+            multidex          : "androidx.multidex:multidex:${dependVersion["multidexVersion"]}",
+            // 网络请求
+            retrofit2         : "com.squareup.retrofit2:retrofit:${dependVersion["retrofitVersion"]}",
+            retrofit2Gson     : "com.squareup.retrofit2:converter-gson:${dependVersion["retrofitGsonVersion"]}",
+            // okhttp
+            loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:${dependVersion["okhttp3LogVersion"]}",
+            okhttp3           : "com.squareup.okhttp3:okhttp:${dependVersion["okhttp3Version"]}",
+            okio              : "com.squareup.okio:okio:${dependVersion["okioVersion"]}",
+            gson              : "com.google.code.gson:gson:${dependVersion["gsonVersion"]}",
+    ]
+
+}
