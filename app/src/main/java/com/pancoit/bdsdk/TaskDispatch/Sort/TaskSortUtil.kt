@@ -1,12 +1,12 @@
-package com.bdtx.main.Task
+package com.pancoit.bdsdk.TaskDispatch.Sort
 
-import android.util.Log
 import androidx.collection.ArraySet
+import com.pancoit.bdsdk.TaskDispatch.Task.Task
+import com.pancoit.mod_main.Utils.LogUtils
 
 
-// 任务排序工具
+// 任务排序
 object TaskSortUtil {
-    val TAG = "TaskSortUtil"
     // 高优先级的Task
     private val sNewTasksHigh: MutableList<Task> = ArrayList()
 
@@ -45,7 +45,7 @@ object TaskSortUtil {
 
         val indexList: List<Int> = graph.topologicalSort()
         val newTasksAll = getResultTasks(originTasks, dependSet, indexList)
-        Log.i(TAG,"任务执行时间：" + (System.currentTimeMillis() - makeTime))
+        LogUtils.i("任务执行时间：" + (System.currentTimeMillis() - makeTime))
         printAllTaskName(newTasksAll, true)
         return newTasksAll
     }
@@ -91,7 +91,7 @@ object TaskSortUtil {
             return
         }
         for (task in newTasksAll) {
-            Log.i(TAG,"需执行任务：" + task.javaClass.simpleName)
+            LogUtils.i("需执行任务：" + task.javaClass.simpleName)
         }
     }
 

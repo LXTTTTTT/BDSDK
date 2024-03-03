@@ -1,4 +1,4 @@
-package com.bdtx.main.Task
+package com.pancoit.bdsdk.TaskDispatch.Task
 
 import android.os.Process
 import androidx.annotation.IntRange

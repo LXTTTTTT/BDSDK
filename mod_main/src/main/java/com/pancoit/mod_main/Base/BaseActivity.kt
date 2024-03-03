@@ -1,4 +1,4 @@
-package com.bdtx.mod_main.Base
+package com.pancoit.mod_main.Base
 
 import android.app.Application
 import android.content.Context
@@ -10,7 +10,7 @@ import android.view.View
 import android.view.Window
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.bdtx.mod_util.Utils.ApplicationUtils
+import com.pancoit.mod_main.Utils.ApplicationUtils
 import com.pancoit.mod_main.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

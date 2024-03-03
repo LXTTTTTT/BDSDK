@@ -8,7 +8,6 @@ import android.media.RingtoneManager
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import com.bdtx.mod_util.Utils.ApplicationUtils
 import com.pancoit.mod_main.View.LoadingDialog
 
 // 全局控件工具

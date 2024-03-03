@@ -1,14 +1,13 @@
-package com.bdtx.main
+package com.pancoit.bdsdk
 
 import android.app.Application
 import android.util.Log
 import com.alibaba.android.arouter.launcher.ARouter
-import com.bdtx.main.Task.DispatcherExecutor
-import com.bdtx.main.Task.Task
-import com.bdtx.mod_util.Utils.ApplicationUtils
-import com.pancoit.bdsdk.BuildConfig
+import com.pancoit.bdsdk.TaskDispatch.Task.Task
+import com.pancoit.mod_main.Utils.ApplicationUtils
 import com.pancoit.mod_main.Global.Variable
 import com.pancoit.mod_main.Utils.CatchExceptionUtils
+import com.pancoit.mod_main.Utils.DispatcherExecutor
 import com.tencent.mmkv.MMKV
 import com.tencent.mmkv.MMKVLogLevel
 import java.util.concurrent.ExecutorService
@@ -47,7 +46,7 @@ class InitMmkvTask() : Task() {
 
     // 指定需要使用的线程池
     override fun runOn(): ExecutorService? {
-        return DispatcherExecutor.iOExecutor
+        return DispatcherExecutor.IOExecutor
     }
 
     // 执行任务

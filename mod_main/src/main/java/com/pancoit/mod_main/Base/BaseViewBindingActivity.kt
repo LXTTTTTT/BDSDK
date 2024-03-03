@@ -1,9 +1,9 @@
-package com.bdtx.mod_main.Base
+package com.pancoit.mod_main.Base
 
 import android.view.LayoutInflater
 import androidx.viewbinding.ViewBinding
-import com.bdtx.mod_util.Extension.saveAs
-import com.bdtx.mod_util.Extension.saveAsUnChecked
+import com.pancoit.mod_main.Extension.saveAs
+import com.pancoit.mod_main.Extension.saveAsUnChecked
 import java.lang.reflect.ParameterizedType
 
 // ViewBinding 基类

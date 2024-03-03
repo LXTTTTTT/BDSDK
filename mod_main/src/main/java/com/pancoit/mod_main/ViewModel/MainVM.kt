@@ -1,7 +1,7 @@
-package com.bdtx.mod_data.ViewModel
+package com.pancoit.mod_main.ViewModel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 import java.util.*
 

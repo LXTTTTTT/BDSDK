@@ -1,4 +1,4 @@
-package com.bdtx.mod_data.ViewModel
+package com.pancoit.mod_main.ViewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

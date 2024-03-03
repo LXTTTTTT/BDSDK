@@ -1,9 +1,16 @@
-package com.bdtx.main.Task
+package com.pancoit.bdsdk.TaskDispatch.Dispatcher
 
 import android.app.Application
 import android.os.Looper
 import android.util.Log
 import androidx.annotation.UiThread
+import com.pancoit.bdsdk.TaskDispatch.Task.DispatchRunnable
+import com.pancoit.bdsdk.TaskDispatch.State.StaterUtils
+import com.pancoit.bdsdk.TaskDispatch.Task.Task
+import com.pancoit.bdsdk.TaskDispatch.Task.TaskCallBack
+import com.pancoit.bdsdk.TaskDispatch.Sort.TaskSortUtil
+import com.pancoit.bdsdk.TaskDispatch.State.TaskStat
+import com.pancoit.mod_main.Utils.LogUtils
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
@@ -12,7 +19,6 @@ import java.util.concurrent.atomic.AtomicInteger
 
 // 任务调度器
 class TaskDispatcher private constructor() {
-    val TAG = "TaskDispatcher"
     private var mStartTime: Long = 0
     private val mFutures: MutableList<Future<*>> = ArrayList()
     private var mAllTasks: MutableList<Task> = ArrayList()  // 所有需要执行的任务
@@ -84,10 +90,10 @@ class TaskDispatcher private constructor() {
             mAllTasks = TaskSortUtil.getSortResult(mAllTasks, mClsAllTasks).toMutableList()  // 任务排序
             mCountDownLatch = CountDownLatch(mNeedWaitCount.get())  // 创建倒计时计数器
             sendAndExecuteAsyncTasks()
-            Log.i(TAG,"预计消耗时间： ${(System.currentTimeMillis() - mStartTime)} 开始执行主任务 ")
+            LogUtils.i("预计消耗时间： ${(System.currentTimeMillis() - mStartTime)} 开始执行主任务 ")
             executeTaskMain()
         }
-        Log.i(TAG,"预计消耗时间 ${(System.currentTimeMillis() - mStartTime)}")
+        LogUtils.i("预计消耗时间 ${(System.currentTimeMillis() - mStartTime)}")
     }
 
     fun cancel() {
@@ -100,11 +106,11 @@ class TaskDispatcher private constructor() {
         mStartTime = System.currentTimeMillis()
         for (task in mMainThreadTasks) {
             val time = System.currentTimeMillis()
-            Log.i(TAG,
+            LogUtils.i(
                 "任务 ${task.javaClass.simpleName} 消耗 ${(System.currentTimeMillis() - time)}"
             )
         }
-        Log.i(TAG,"任务消耗 ${(System.currentTimeMillis() - mStartTime)}")
+        LogUtils.i("任务消耗 ${(System.currentTimeMillis() - mStartTime)}")
     }
 
     private fun sendAndExecuteAsyncTasks() {
@@ -122,13 +128,13 @@ class TaskDispatcher private constructor() {
 
     // 被依赖信息
     private fun printDependedMsg(isPrintAllTask: Boolean) {
-        Log.e(TAG,"需要等待的任务数量 : ${mNeedWaitCount.get()}")
+        LogUtils.e("需要等待的任务数量 : ${mNeedWaitCount.get()}")
         if (isPrintAllTask) {
             for (cls in mDependedHashMap.keys) {
-                Log.e(TAG,"cls: ${cls.simpleName} ${mDependedHashMap[cls]?.size}")
+                LogUtils.e("cls: ${cls.simpleName} ${mDependedHashMap[cls]?.size}")
                 mDependedHashMap[cls]?.let {
                     for (task in it) {
-                        Log.e(TAG,"cls:${task.javaClass.simpleName}")
+                        LogUtils.e("cls:${task.javaClass.simpleName}")
                     }
                 }
             }
@@ -164,7 +170,7 @@ class TaskDispatcher private constructor() {
                         task.isFinished = true
                         satisfyChildren(task)
                         markTaskDone(task)
-                        Log.i(TAG,"${task.javaClass.simpleName} finish")
+                        LogUtils.i("${task.javaClass.simpleName} finish")
                         Log.i("测试", "---")
                     }
                 })
@@ -189,9 +195,11 @@ class TaskDispatcher private constructor() {
     @UiThread
     fun await() {
         try {
-            Log.e(TAG,"还有任务数量： ${mNeedWaitCount.get()}")
-            for (task in mNeedWaitTasks) {
-                Log.e(TAG,"需要等待: ${task.javaClass.simpleName}")
+            if (LogUtils.isDebug) {
+                LogUtils.e("还有任务数量： ${mNeedWaitCount.get()}")
+                for (task in mNeedWaitTasks) {
+                    LogUtils.e("需要等待: ${task.javaClass.simpleName}")
+                }
             }
             if (mNeedWaitCount.get() > 0) {
                 mCountDownLatch?.await(WAIT_TIME.toLong(), TimeUnit.MILLISECONDS)  // 阻塞当前线程，直到计数器减到零或者超过等待时间

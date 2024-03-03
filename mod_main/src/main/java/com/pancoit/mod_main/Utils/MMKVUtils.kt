@@ -1,4 +1,4 @@
-package com.bdtx.mod_util.Utils
+package com.pancoit.mod_main.Utils
 
 import android.os.Parcelable
 import com.tencent.mmkv.MMKV

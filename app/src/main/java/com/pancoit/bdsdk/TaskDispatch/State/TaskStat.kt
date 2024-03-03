@@ -1,10 +1,9 @@
-package com.bdtx.main.Task
+package com.pancoit.bdsdk.TaskDispatch.State
 
-import android.util.Log
+import com.pancoit.mod_main.Utils.LogUtils
 import java.util.concurrent.atomic.AtomicInteger
 
 object TaskStat {
-    val TAG = "TaskStat"
     @Volatile
     private var sCurrentSituation = ""
     private val sBeans: MutableList<TaskStatBean> = ArrayList()
@@ -16,7 +15,7 @@ object TaskStat {
             if (!sOpenLaunchStat) {
                 return
             }
-            Log.i(TAG,"currentSituation   $currentSituation")
+            LogUtils.i("currentSituation   $currentSituation")
             sCurrentSituation = currentSituation
             setLaunchStat()
         }

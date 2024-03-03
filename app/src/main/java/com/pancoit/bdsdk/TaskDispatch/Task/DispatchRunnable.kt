@@ -1,14 +1,15 @@
-package com.bdtx.main.Task
+package com.pancoit.bdsdk.TaskDispatch.Task
 
 import android.os.Looper
 import android.os.Process
-import android.util.Log
 import androidx.core.os.TraceCompat
+import com.pancoit.bdsdk.TaskDispatch.Dispatcher.TaskDispatcher
+import com.pancoit.bdsdk.TaskDispatch.State.TaskStat
+import com.pancoit.mod_main.Utils.LogUtils
 
 
-// 执行任务的地方
+// 任务执行处
 class DispatchRunnable : Runnable {
-    val TAG = "DispatchRunnable"
     private var mTask: Task
     private var mTaskDispatcher: TaskDispatcher? = null
 
@@ -23,7 +24,7 @@ class DispatchRunnable : Runnable {
 
     override fun run() {
         TraceCompat.beginSection(mTask.javaClass.simpleName)
-        Log.i(TAG,"${mTask.javaClass.simpleName}开始执行 | Situation：${TaskStat.currentSituation}")
+        LogUtils.i("${mTask.javaClass.simpleName}开始执行 | Situation：${TaskStat.currentSituation}")
         Process.setThreadPriority(mTask.priority())
         var startTime = System.currentTimeMillis()
         mTask.isWaiting = true
@@ -46,7 +47,7 @@ class DispatchRunnable : Runnable {
                 it.satisfyChildren(mTask)
                 it.markTaskDone(mTask)
             }
-            Log.i(TAG,"${mTask.javaClass.simpleName} finish")
+            LogUtils.i("${mTask.javaClass.simpleName} finish")
         }
         TraceCompat.endSection()
     }
@@ -59,13 +60,15 @@ class DispatchRunnable : Runnable {
      */
     private fun printTaskLog(startTime: Long, waitTime: Long) {
         val runTime = System.currentTimeMillis() - startTime
-        Log.i(TAG,
+        if (LogUtils.isDebug) {
+            LogUtils.i(
             mTask.javaClass.simpleName + "| wait：" + waitTime + "| run："
                     + runTime + "| isMain：" + (Looper.getMainLooper() == Looper.myLooper())
                     + "| needWait：" + (mTask.needWait() || Looper.getMainLooper() == Looper.myLooper())
                     + "| ThreadId：" + Thread.currentThread().id
                     + "| ThreadName：" + Thread.currentThread().name
                     + "| Situation：" + TaskStat.currentSituation
-        )
+            )
+        }
     }
 }

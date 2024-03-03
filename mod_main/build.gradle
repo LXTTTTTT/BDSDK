@@ -56,9 +56,15 @@ dependencies {
     testCompileOnly rootProject.depsLibs.junit
     androidTestCompileOnly rootProject.depsLibs.extJunit
     androidTestCompileOnly rootProject.depsLibs.espressoCore
+
 // 额外导入 ---------------------------------------------------
+    compileOnly rootProject.depsLibs.aroutreApi
+//    compileOnly (rootProject.depsLibs.aroutreApi){transitive(false)}
+    kapt rootProject.depsLibs.arouterCompiler
+    implementation rootProject.depsLibs.wear  // 弧形列表（androidx.core:core-ktx 要改成1.6.0）
     // kotlin viewModel 同时要导入activityKtx适配
-//    implementation rootProject.depsLibs.activityKtx
+    implementation rootProject.depsLibs.activityKtx
+    compileOnly rootProject.depsLibs.rxPermission
     api rootProject.depsLibs.mmkv  // MMKV
 // 导入模块 ---------------------------------------------------
 

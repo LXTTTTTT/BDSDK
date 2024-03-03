@@ -4,8 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import android.util.Log
-import com.bdtx.main.*
-import com.bdtx.main.Task.TaskDispatcher
+import com.pancoit.bdsdk.TaskDispatch.Dispatcher.TaskDispatcher
 import com.pancoit.mod_main.Utils.ActivityManagementUtils
 
 class MainApplication:Application() {
@@ -31,7 +30,10 @@ class MainApplication:Application() {
         TaskDispatcher.init(this)  // 初始化调度器
         TaskDispatcher.createInstance().addTask(InitAppUtilTask(this))
             .addTask(InitMmkvTask())
+//            .addTask(InitSystemInfoTask())
+//            .addTask(InitGreenDaoTask())
             .addTask(InitArouterTask())
+//            .addTask(InitZDCompression())
             .addTask(InitCatchException())
             .start()
         TaskDispatcher.createInstance().await()

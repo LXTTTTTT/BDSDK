@@ -1,10 +1,9 @@
-package com.bdtx.mod_util.Utils
+package com.pancoit.mod_main.Utils
 
 import android.app.Application
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.pancoit.mod_main.Utils.ActivityManagementUtils
 
 // 应用程序工具
 object ApplicationUtils {
@@ -25,7 +24,7 @@ object ApplicationUtils {
     // 获取全局单例 viewModel
     private var mainVM : ViewModel? = null
     fun <T : ViewModel> getGlobalViewModel(viewModelClass: Class<T>) : T{
-        if(mainVM==null){
+        if(mainVM ==null){
             mainVM = ViewModelProvider.AndroidViewModelFactory(app).create(viewModelClass)
         }
         return mainVM as T

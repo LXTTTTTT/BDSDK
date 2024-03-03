@@ -1,9 +1,9 @@
-package com.bdtx.mod_main.Base
+package com.pancoit.mod_main.Base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import com.bdtx.mod_util.Utils.ApplicationUtils
+import com.pancoit.mod_main.Utils.ApplicationUtils
 import java.lang.reflect.ParameterizedType
 
 // MVVM 基类
