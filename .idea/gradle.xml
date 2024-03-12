@@ -11,8 +11,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/LocalRepo" />
+            <option value="$PROJECT_DIR$/LocalRepo/bdsdk_bluetooth_aar" />
+            <option value="$PROJECT_DIR$/LocalRepo/bdsdk_parser_aar" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/mod_bluetooth" />
             <option value="$PROJECT_DIR$/mod_main" />
+            <option value="$PROJECT_DIR$/mod_parse" />
           </set>
         </option>
       </GradleProjectSettings>

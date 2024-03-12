@@ -60,12 +60,16 @@ dependencies {
     androidTestImplementation rootProject.depsLibs.extJunit
     androidTestImplementation rootProject.depsLibs.espressoCore
 // 额外导入 ---------------------------------------------------------
-    implementation rootProject.depsLibs.mmkv
     implementation rootProject.depsLibs.aroutreApi
     kapt rootProject.depsLibs.arouterCompiler
-
+    // rx
+    implementation rootProject.depsLibs.rxPermission
+    implementation rootProject.depsLibs.rxjava
+    implementation rootProject.depsLibs.rxandroid
 // 模块导入 ---------------------------------------------------------
-    implementation project(path: ':mod_main')  // 页面
+    implementation project(path: ':mod_main')  // 主页面
+//    implementation project(path: ':mod_bluetooth')  // 蓝牙连接模块
+//    implementation project(path: ':mod_parse')
 //    implementation project(path: ':mod_util')
 //    implementation project(path: ':mod_data')
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/white"> <!-- 自定义水波纹颜色 -->
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <solid android:color="@color/green_3" />
+            <corners android:topLeftRadius="8dp"
+                android:topRightRadius="0dp"
+                android:bottomRightRadius="8dp"
+                android:bottomLeftRadius="8dp" />
+            <stroke android:width="0dp"/>
+
+        </shape>
+    </item>
+</ripple>

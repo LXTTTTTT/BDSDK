@@ -17,3 +17,8 @@ dependencyResolutionManagement {
 rootProject.name = "BDSDK-2024"
 include ':app'
 include ':mod_main'
+include ':mod_bluetooth'
+include ':LocalRepo'
+include ':LocalRepo:bdsdk_bluetooth_aar'
+include ':LocalRepo:bdsdk_parser_aar'
+include ':mod_parse'

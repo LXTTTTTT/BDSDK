@@ -19,18 +19,10 @@ class MainVM : BaseViewModel() {
     val deviceLatitude : MutableLiveData<Double?> = MutableLiveData()  // 设备纬度
     val deviceAltitude : MutableLiveData<Double?> = MutableLiveData()  // 设备高度
     val waitTime : MutableLiveData<Int?> = MutableLiveData()  // 等待时间
-    val unreadMessageCount : MutableLiveData<Int?> = MutableLiveData()  // 总未读消息数量
-
-    val systemLongitude : MutableLiveData<Double?> = MutableLiveData()  // 系统经度
-    val systemLatitude : MutableLiveData<Double?> = MutableLiveData()  // 系统纬度
-    val systemAltitude : MutableLiveData<Double?> = MutableLiveData()  // 系统高度
-
-
 
 
     init {
         initDeviceParameter()
-        initSystemParameter()
     }
 
     // 初始化默认参数
@@ -40,18 +32,12 @@ class MainVM : BaseViewModel() {
         deviceCardFrequency.postValue(-1)
         deviceCardLevel.postValue(-1)
         deviceBatteryLevel.postValue(-1)
-        signal.postValue(intArrayOf(0,0,0,0,0,0,0,0,0,0))
+        signal.postValue(intArrayOf(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0))
 //        unreadMessageCount.postValue(0)
         waitTime.postValue(0)
         deviceLongitude.postValue(0.0)
         deviceLatitude.postValue(0.0)
         deviceAltitude.postValue(0.0)
-    }
-
-    fun initSystemParameter(){
-        systemLongitude.postValue(0.0)
-        systemLatitude.postValue(0.0)
-        systemAltitude.postValue(0.0)
     }
 
     // 当前信号是否良好

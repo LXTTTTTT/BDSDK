@@ -44,7 +44,7 @@ ext {
     ]
 
     depsLibs = [
-            coreKtx           : 'androidx.core:core-ktx:1.6.0',
+            coreKtx           : 'androidx.core:core-ktx:1.2.0',
             appcompat         : 'androidx.appcompat:appcompat:1.3.0',
             material          : 'com.google.android.material:material:1.4.0',
             constraintlayout  : 'androidx.constraintlayout:constraintlayout:2.0.4',
@@ -57,8 +57,8 @@ ext {
             viewModelKtx      : 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1',
             liveDataKtx       : 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1',
 
-            activity          : 'androidx.activity:activity:1.3.1',
-            activityKtx       : 'androidx.activity:activity-ktx:1.3.1',
+            activity          : 'androidx.activity:activity:1.5.1',
+            activityKtx       : 'androidx.activity:activity-ktx:1.5.1',
 
 
             navigationFragment: 'androidx.navigation:navigation-fragment-ktx:2.3.5',

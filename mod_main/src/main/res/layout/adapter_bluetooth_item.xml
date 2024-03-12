@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/areaLL"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:layout_marginTop="5dp"
+    android:orientation="horizontal"
+    android:background="@drawable/corner_fill_white_1_ripple">
+    <ImageView
+        android:id="@+id/bluetooth_img"
+        android:layout_marginLeft="20dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@mipmap/bluetooth_icon"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_toLeftOf="@+id/signal"
+        android:layout_toRightOf="@+id/bluetooth_img"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/device_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Box"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/device_addr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="80:"
+            android:textSize="13sp" />
+    </LinearLayout>
+     <ImageView
+         android:id="@+id/signal"
+         android:layout_width="30dp"
+         android:layout_height="30dp"
+         android:layout_alignParentEnd="true"
+         android:layout_marginRight="15dp"
+         android:layout_marginTop="10dp"
+         android:background="@mipmap/signal_icon"/>
+
+</RelativeLayout>

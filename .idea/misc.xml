@@ -4,7 +4,22 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/drawable-v24/corner_fill_white.xml" value="0.181" />
-        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/drawable/corner_fill_black_2_ripple.xml" value="0.181" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/drawable/corner_fill_blue_1_ripple.xml" value="0.181" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/drawable/corner_fill_blue_5.xml" value="0.181" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/drawable/corner_fill_gray_3.xml" value="0.181" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/drawable/corner_fill_gray_8.xml" value="0.181" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/drawable/corner_fill_gray_9.xml" value="0.181" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/drawable/corner_fill_gray_9_2.xml" value="0.181" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/drawable/corner_fill_gray_9_ripple.xml" value="0.181" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/drawable/corner_fill_green_3.xml" value="0.181" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/drawable/corner_fill_green_3_ripple.xml" value="0.181" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/drawable/corner_fill_red_3.xml" value="0.181" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/drawable/corner_fill_white_1.xml" value="0.181" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/drawable/corner_fill_white_1_ripple.xml" value="0.181" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/layout/activity_connect_bluetooth.xml" value="0.2928637627432808" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/layout/adapter_bluetooth_item.xml" value="0.358695652173913" />
         <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/layout/dialog_loading.xml" value="0.358695652173913" />
       </map>
     </option>

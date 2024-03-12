@@ -15,6 +15,7 @@ import com.pancoit.mod_main.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 // 基类
@@ -38,14 +39,10 @@ abstract class BaseActivity : AppCompatActivity(){
         initView(savedInstanceState);  // 初始化页面
         CoroutineScope(Dispatchers.Main).launch{
             initData();  // 初始化数据
-            initDataSuspend()
+            withContext(Dispatchers.IO){
+                initDataSuspend()
+            }
         }
-        // 侧滑返回功能注册
-//        registerSlideBack (true,{
-//            finish()
-//        },{
-//            this.iconViewHeight = dp2px(90)
-//        })
 //        if(enableEventBus()){EventBus.getDefault().register(this)}  // 是否需要开启 EventBus 功能
     }
 

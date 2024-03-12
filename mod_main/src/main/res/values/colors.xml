@@ -37,4 +37,10 @@
     <color name="primary_1">#008577</color>
     <color name="primary_2">#163256</color>
     <color name="primary_3">#66163256</color>
+    <!--信号柱子颜色-->
+    <color name="signal_1">#ffffff</color>
+    <color name="signal_2">#aaccd7</color>
+    <color name="signal_3">#49b5d9</color>
+    <color name="signal_4">#0fc2ff</color>
+    <color name="signal_5">#3482ed</color>
 </resources>
