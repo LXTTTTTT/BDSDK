@@ -1,6 +1,7 @@
 package com.pancoit.mod_parse.Parameter;
 
 public class ResponseCommand {
+    public String[] Raw = null;  // 原始指令
     public String Command = "-";  // 指令
     public boolean Result = false;  // 指令响应结果
     public String Content = "-";  // 指令响应内容

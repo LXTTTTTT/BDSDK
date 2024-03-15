@@ -127,6 +127,39 @@ public class ProtocolPackager {
         return DataUtils.packaging(command);
     }
 
+    /**
+     * 工作协议设置/查询：
+     * @param type 0-查询 1-设置
+     * @param rdss RDSS协议：0-4.0格式协议 1-2.1格式协议
+     * @param rnss RNSS协议：0-自定义4.0格式协议 1-2.1格式协议
+     * @return string_hex
+     */
+    public static String CCYPS(int type, int rdss, int rnss){
+        String command = "CCYPS," + type + "," + rdss + "," + rnss;
+        return DataUtils.packaging(command);
+    }
+
+    /**
+     * 功能模组查询
+     * @return string_hex
+     */
+    public static String CCMDQ() {
+        String command = "CCMDQ,";
+        return DataUtils.packaging(command);
+    }
+
+    /**
+     * 功能模组设置：
+     * @param rdss RDSS使能：0-关闭模组 1-打开模组
+     * @param rnss RNSS使能：0-关闭模组 1-单BDS-RNSS定位 2-单GPS定位 3-BDS-RNSS/GPS联合解算定位
+     * @param ble BLE使能：0-关闭模组 1-打开模组
+     * @param net NET使能：0-关闭模组 1-打开模组
+     * @return string_hex
+     */
+    public static String CCMDS(int rdss, int rnss, int ble, int net){
+        String command = "CCMDS," + rdss + "," + rnss + "," + ble + "," + net;
+        return DataUtils.packaging(command);
+    }
 
     /**
      * 位置上报参数设置：
@@ -150,7 +183,12 @@ public class ProtocolPackager {
      * @return string_hex
      */
     public static String CCSHM(int type, String cardNumber, int fre){
-        String command = "CCSHM," + type + "," + cardNumber + "," + fre;
+        String command;
+        if(type==0){
+            command = "CCSHM," + type;
+        }else {
+            command = "CCSHM," + type + "," + cardNumber + "," + fre;
+        }
         return DataUtils.packaging(command);
     }
 
@@ -171,6 +209,17 @@ public class ProtocolPackager {
      */
     public static String CCQJS(int type, int mode) {
         String command = type==0? ("CCQJS,"+type):("CCQJS,"+type+","+mode);
+        return DataUtils.packaging(command);
+    }
+
+    /**
+     * 模式设置/查询：
+     * @param type 0-查询 1-设置
+     * @param mode 模式: 0-预留 1-标准模式 2-RD透传模式 3-NET透传模式 4-全透传模式
+     * @return string_hex
+     */
+    public static String CCTRA(int type, int mode) {
+        String command = type==0? ("CCTRA,"+type):("CCTRA,"+type+","+mode);
         return DataUtils.packaging(command);
     }
 
@@ -196,21 +245,21 @@ public class ProtocolPackager {
     }
 
     /**
+     * RNSS输出频度查询
+     * @return string_hex
+     */
+    public static String CCRNQ() {
+        String command = "CCRNQ,";
+        return DataUtils.packaging(command);
+    }
+
+    /**
      * RNSS输出频度设置：
      * 输入对应类型RN指令的频度，0-9，0关闭输出，最高为9
      * @return string_hex
      */
     public static String  CCRNS(int GGA, int GSV, int GLL, int GSA, int RMC, int ZDA){
         String command = "CCRNS,"+GGA+","+GSV+","+GLL+","+GSA+","+RMC+","+ZDA;
-        return DataUtils.packaging(command);
-    }
-
-    /**
-     * RNSS输出频度查询
-     * @return string_hex
-     */
-    public static String CCRNQ() {
-        String command = "CCRNQ,";
         return DataUtils.packaging(command);
     }
 

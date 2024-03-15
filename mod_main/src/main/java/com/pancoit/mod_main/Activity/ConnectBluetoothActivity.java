@@ -1,15 +1,8 @@
 package com.pancoit.mod_main.Activity;
 
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,14 +12,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.pancoit.mod_bluetooth.BLE.BluetoothTransfer;
 import com.pancoit.mod_bluetooth.CallBack.OnBluetoothTransfer;
 import com.pancoit.mod_bluetooth.CallBack.OnBluetoothWork;
-import com.pancoit.mod_bluetooth.Utils.DataUtils;
 import com.pancoit.mod_main.Adapter.BluetoothListAdapter;
 import com.pancoit.mod_main.Base.BaseViewBindingActivity;
 import com.pancoit.mod_main.Global.Constant;
 import com.pancoit.mod_main.Utils.ApplicationUtils;
 import com.pancoit.mod_main.Utils.Connection.BaseConnector;
 import com.pancoit.mod_main.Utils.GlobalControlUtils;
-import com.pancoit.mod_main.ViewModel.MainVM;
+import com.pancoit.mod_main.ViewModel.BDVM;
 import com.pancoit.mod_main.databinding.ActivityConnectBluetoothBinding;
 import com.pancoit.mod_parse.Protocol.ProtocolParser;
 
@@ -86,7 +78,7 @@ public class ConnectBluetoothActivity extends BaseViewBindingActivity<ActivityCo
             @Override public void onConnect() {
                 GlobalControlUtils.INSTANCE.hideLoadingDialog();
                 GlobalControlUtils.INSTANCE.showToast("连接成功",0);
-                ApplicationUtils.INSTANCE.getGlobalViewModel(MainVM.class).isConnectDevice().postValue(true);  // 修改连接参数
+                ApplicationUtils.INSTANCE.getGlobalViewModel(BDVM.class).isConnectDevice().postValue(true);  // 修改连接参数
                 // 下发初始化指令
                 if(BaseConnector.Companion.getConnector()!=null){
                     BaseConnector.Companion.getConnector().initDevice();
@@ -96,7 +88,7 @@ public class ConnectBluetoothActivity extends BaseViewBindingActivity<ActivityCo
             @Override public void onDisconnect() {
                 GlobalControlUtils.INSTANCE.hideLoadingDialog();
                 GlobalControlUtils.INSTANCE.showToast("断开连接",0);
-                ApplicationUtils.INSTANCE.getGlobalViewModel(MainVM.class).initDeviceParameter();  // 初始化连接参数
+                ApplicationUtils.INSTANCE.getGlobalViewModel(BDVM.class).initDeviceParameter();  // 初始化连接参数
                 ProtocolParser.getInstance().Init();  // 初始化解析器参数
             }
         });
@@ -121,7 +113,9 @@ public class ConnectBluetoothActivity extends BaseViewBindingActivity<ActivityCo
         });
         // 开启蓝牙工作日志打印
         BluetoothTransfer.getInstance().showLog(false);
-        // 启用常用指令过滤
+        // 设置指令过滤规则
+        BluetoothTransfer.getInstance().setMatchingRules(new String[]{"FKI","ICP","ZDX"});
+        // 启用指令过滤
         BluetoothTransfer.getInstance().enableFiltering(false);
     }
 

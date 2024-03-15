@@ -19,8 +19,11 @@
         <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/drawable/corner_fill_white_1_ripple.xml" value="0.181" />
         <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/layout/activity_connect_bluetooth.xml" value="0.2928637627432808" />
         <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/layout/activity_main2.xml" value="0.358695652173913" />
         <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/layout/adapter_bluetooth_item.xml" value="0.358695652173913" />
         <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/layout/dialog_loading.xml" value="0.358695652173913" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/layout/fragment_bd.xml" value="0.25" />
+        <entry key="..\:/my_project/BDSDK-2024/mod_main/src/main/res/layout/fragment_device.xml" value="0.25" />
       </map>
     </option>
   </component>

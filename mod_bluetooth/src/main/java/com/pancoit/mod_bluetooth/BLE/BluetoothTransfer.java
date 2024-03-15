@@ -78,6 +78,7 @@ public class BluetoothTransfer {
     }
 
     public void showLog(boolean show){Variable.showLog = show;}
+    public void setMatchingRules(String[] rules){Variable.setMatchingRules(rules);}
     public void enableFiltering(boolean enable){Variable.enableCommonInstructionFiltering = enable;}
 
     private BluetoothReceiver receiver = null;
@@ -367,7 +368,8 @@ public class BluetoothTransfer {
             for (String s : data_hex_array) {
                 String s_str = DataUtils.hex2String(s);
                 if(Variable.enableCommonInstructionFiltering){
-                    Pattern pattern = Pattern.compile("FKI|ICP|ICI|TCI|PWI|SNR|GGA|GLL|PRX|RNX|ZDX|TXR");
+                    String matchingRules = Variable.matchingRules;
+                    Pattern pattern = Pattern.compile(matchingRules);
                     Matcher matcher = pattern.matcher(s_str);
                     if (matcher.find()) {
                         if(onBluetoothTransfer!=null){onBluetoothTransfer.onProtocolReceive(s_str);}

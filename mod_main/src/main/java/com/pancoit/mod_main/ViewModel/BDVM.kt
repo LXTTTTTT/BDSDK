@@ -6,7 +6,7 @@ import kotlinx.coroutines.*
 import java.util.*
 
 // 全局使用 ViewModel
-class MainVM : BaseViewModel() {
+class BDVM : BaseViewModel() {
 
     val TAG = "MainVM"
     val isConnectDevice : MutableLiveData<Boolean?> = MutableLiveData()  // 是否连接蓝牙

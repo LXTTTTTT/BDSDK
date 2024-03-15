@@ -1,25 +1,19 @@
 package com.pancoit.mod_main.Activity
 
-import android.Manifest
-import android.bluetooth.BluetoothAdapter
-import android.content.Intent
-import android.location.LocationManager
 import android.os.Bundle
-import android.provider.Settings
-import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.alibaba.android.arouter.launcher.ARouter
+import androidx.lifecycle.ViewModelProvider
 import com.pancoit.mod_main.Base.BaseMVVMActivity
-import com.pancoit.mod_main.Global.Constant
-import com.pancoit.mod_main.Global.Variable
+import com.pancoit.mod_main.Fragment.BDFragment
+import com.pancoit.mod_main.Fragment.DeviceFragment
 import com.pancoit.mod_main.R
-import com.pancoit.mod_main.Utils.Connection.BLEConnector
+import com.pancoit.mod_main.Utils.ApplicationUtils
 import com.pancoit.mod_main.Utils.Connection.BaseConnector
 import com.pancoit.mod_main.Utils.GlobalControlUtils
-import com.pancoit.mod_main.ViewModel.MainVM
+import com.pancoit.mod_main.View.BottomBar
+import com.pancoit.mod_main.ViewModel.BDVM
+import com.pancoit.mod_main.ViewModel.DeviceVM
 import com.pancoit.mod_main.databinding.ActivityMainBinding
 import com.pancoit.mod_parse.CallBack.ParameterListener
 import com.pancoit.mod_parse.Parameter.*
@@ -27,171 +21,107 @@ import com.pancoit.mod_parse.Protocol.ProtocolParser
 import com.tbruyelle.rxpermissions3.RxPermissions
 
 
-class MainActivity : BaseMVVMActivity<ActivityMainBinding, MainVM>(true) {
+class MainActivity : BaseMVVMActivity<ActivityMainBinding, DeviceVM>(false) {
 
-    lateinit var rxPermissions : RxPermissions
+    lateinit var bdFragment: BDFragment
+    lateinit var deviceFragment: DeviceFragment
+    lateinit var bdvm: BDVM
     override fun beforeSetLayout() {}
     override fun enableEventBus(): Boolean { return true }
     override fun initView(savedInstanceState: Bundle?) {
-        rxPermissions = RxPermissions(this)
-        init_control()
+        init_fragment()
     }
     override suspend fun initDataSuspend() {}
     override fun initData() {
         super.initData()  // 在父类初始化 viewModel
-        init_view_model()
+        bdvm = ApplicationUtils.getGlobalViewModel(BDVM::class.java)
         init_parser_callback()
-    }
-
-    fun init_control(){
-        // 连接设备
-        viewBinding.connectDevice.setOnClickListener {
-            if(!Variable.isARouterInit) return@setOnClickListener
-            if(viewModel.isConnectDevice.value==true){
-                GlobalControlUtils.showAlertDialog("断开连接？","当前已连接北斗设备，是否需要断开",
-                    onYesClick = {
-                        BaseConnector.connector?.disconnect()
-                    }
-                )
-            }
-            else{
-                rxPermissions
-                    .request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)  // 定位权限检测
-                    .subscribe{  granted->
-                        if(granted){
-                            var isBluetoothEnable = BluetoothAdapter.getDefaultAdapter().isEnabled
-                            var isLocationEnabled = isLocationEnabled()
-                            // 蓝牙开启检测
-                            if(!isBluetoothEnable){
-                                val enableBluetooth = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-                                startActivity(enableBluetooth)
-                            }
-                            // 定位开启检测
-                            if(!isLocationEnabled){
-                                val enableLocation = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                                startActivity(enableLocation)
-                            }
-                            if(isBluetoothEnable && isLocationEnabled){
-                                if(BaseConnector.connector==null){
-                                    val connector = BLEConnector()
-                                    BaseConnector.setConnector(connector)
-                                }
-                                ARouter.getInstance().build(Constant.CONNECT_BLUETOOTH_ACTIVITY).navigation()
-                            }else{
-                                GlobalControlUtils.showToast("请先打开系统蓝牙和定位功能！",0)
-                            }
-                        }else{
-                            GlobalControlUtils.showToast("请先授予权限！",0)
-                        }
-                    }
-            }
-        }
-
-        // 收发测试
-        viewBinding.sendTest.setOnClickListener {
-            BaseConnector.connector?.sendMessage(viewModel.deviceCardID.value!!,2,"test")
-        }
-
-        signal_text.add(viewBinding.signal1Text);signal_text.add(viewBinding.signal2Text);signal_text.add(viewBinding.signal3Text);signal_text.add(viewBinding.signal4Text);signal_text.add(viewBinding.signal5Text);signal_text.add(viewBinding.signal6Text);signal_text.add(viewBinding.signal7Text);signal_text.add(viewBinding.signal8Text);signal_text.add(viewBinding.signal9Text);signal_text.add(viewBinding.signal10Text);signal_text.add(viewBinding.signal11Text);signal_text.add(viewBinding.signal12Text);signal_text.add(viewBinding.signal13Text);signal_text.add(viewBinding.signal14Text);signal_text.add(viewBinding.signal15Text);signal_text.add(viewBinding.signal16Text);signal_text.add(viewBinding.signal17Text);signal_text.add(viewBinding.signal18Text);signal_text.add(viewBinding.signal19Text);signal_text.add(viewBinding.signal20Text);signal_text.add(viewBinding.signal21Text);
-        signal_view.add(viewBinding.signal1Img);signal_view.add(viewBinding.signal2Img);signal_view.add(viewBinding.signal3Img);signal_view.add(viewBinding.signal4Img);signal_view.add(viewBinding.signal5Img);signal_view.add(viewBinding.signal6Img);signal_view.add(viewBinding.signal7Img);signal_view.add(viewBinding.signal8Img);signal_view.add(viewBinding.signal9Img);signal_view.add(viewBinding.signal10Img);signal_view.add(viewBinding.signal11Img);signal_view.add(viewBinding.signal12Img);signal_view.add(viewBinding.signal13Img);signal_view.add(viewBinding.signal14Img);signal_view.add(viewBinding.signal15Img);signal_view.add(viewBinding.signal16Img);signal_view.add(viewBinding.signal17Img);signal_view.add(viewBinding.signal18Img);signal_view.add(viewBinding.signal19Img);signal_view.add(viewBinding.signal20Img);signal_view.add(viewBinding.signal21Img);
-
-        // 计算出信号的长度变量
-        viewBinding.signal1Group.post {
-            signal_total_high = viewBinding.signal1Group.height // 总高度
-            signal_text_high = viewBinding.signal1Text.height // 字体高度
-            signal_high = signal_total_high - signal_text_high // 柱子最高高度
-            signal_variable = signal_high / 60 // 计算每一信号，用最高高度除最大信号（60）
-            loge("信号总高度: $signal_total_high/$signal_text_high/$signal_high/$signal_variable")
-        }
-
-    }
-
-    // 数据变化监听
-    fun init_view_model(){
-        // 连接状态
-        viewModel.isConnectDevice.observe(this,object : Observer<Boolean?> {
-            override fun onChanged(isConnect: Boolean?) {
-                if(isConnect==true){
-                    viewBinding.connectDevice.text = "断开连接"
-                    viewBinding.sendTest.setVisibility(View.VISIBLE);
-                }else{
-                    viewBinding.connectDevice.text = "连接设备"
-                    viewBinding.sendTest.setVisibility(View.GONE);
-                }
-            }
-        })
-
-        viewModel.deviceCardID.observe(this,{
-            it?.let {
-                loge("监听到卡号变化 $it")
-                viewBinding.cardId.setText(it)
-            }
-        })
-
-        viewModel.deviceCardFrequency.observe(this,{
-            it?.let {
-                viewBinding.frequency.setText(it.toString())
-            }
-        })
-
-        viewModel.deviceCardLevel.observe(this,{
-            it?.let {
-                viewBinding.level.setText(it.toString())
-            }
-        })
-
-        viewModel.deviceBatteryLevel.observe(this,{
-            it?.let {
-                viewBinding.battery.setText(it.toString())
-            }
-        })
-
-        viewModel.signal.observe(this,{
-            it?.let {
-                init_signal(it)
-            }
-        })
-
-        viewModel.deviceLongitude.observe(this,{
-            it?.let {
-                viewBinding.longitude.setText(it.toString())
-            }
-        })
-        viewModel.deviceLatitude.observe(this,{
-            it?.let {
-                viewBinding.latitude.setText(it.toString())
-            }
-        })
-        viewModel.deviceAltitude.observe(this,{
-            it?.let {
-                viewBinding.altitude.setText(it.toString())
-            }
-        })
-
     }
 
     // 初始化数据解析SDK回调
     fun init_parser_callback(){
         ProtocolParser.getInstance().showLog(true)
-        ProtocolParser.getInstance().setParameterListener(object : ParameterListener{
+        ProtocolParser.getInstance().setParameterListener(object : ParameterListener {
             override fun OnBDParameterChange(parameter: BD_Parameter?) {
                 parameter?.let {  parameter->
-                    viewModel.deviceCardID.postValue(parameter.CardID)
-                    viewModel.deviceCardLevel.postValue(parameter.CardLevel)
-                    viewModel.deviceCardFrequency.postValue(parameter.CardFrequency)
-//                    viewModel.deviceBatteryLevel.postValue(parameter.BatteryLevel)
-                    viewModel.signal.postValue(parameter.Signal)
+                    bdvm?.let {
+                        it.deviceCardID.postValue(parameter.CardID)
+                        it.deviceCardLevel.postValue(parameter.CardLevel)
+                        it.deviceCardFrequency.postValue(parameter.CardFrequency)
+//                    it.deviceBatteryLevel.postValue(parameter.BatteryLevel)
+                        it.signal.postValue(parameter.Signal)
+                    }
                 }
             }
 
             override fun OnDeviceAParameterChange(parameter: XYParameter?) {
                 parameter?.let {
-                    viewModel.deviceBatteryLevel.postValue(parameter.BatteryLevel)
+                    viewModel.XY_Version.postValue(parameter.Version)
+                    viewModel.XY_RestartMode.postValue(parameter.RestartMode)
+                    viewModel.XY_BatteryLevel.postValue(parameter.BatteryLevel)
+                    viewModel.XY_ContentLength.postValue(parameter.ContentLength)
+                    viewModel.XY_Temperature.postValue(parameter.Temperature)
+                    viewModel.XY_Humidity.postValue(parameter.Humidity)
+                    viewModel.XY_Pressure.postValue(parameter.Pressure)
+                    viewModel.XY_LocationReportID.postValue(parameter.LocationReportID)
+                    viewModel.XY_PositionMode.postValue(parameter.PositionMode)
+                    viewModel.XY_CollectionFrequency.postValue(parameter.CollectionFrequency)
+                    viewModel.XY_PositionCount.postValue(parameter.PositionCount)
+                    viewModel.XY_ReportType.postValue(parameter.ReportType)
+                    viewModel.XY_SOSID.postValue(parameter.SOSID)
+                    viewModel.XY_SOSFrequency.postValue(parameter.SOSFrequency)
+                    viewModel.XY_OKID.postValue(parameter.OKID)
+                    viewModel.XY_OKContent.postValue(parameter.OKContent)
+                    viewModel.XY_RDSSProtocolVersion.postValue(parameter.RDSSProtocolVersion)
+                    viewModel.XY_RNSSProtocolVersion.postValue(parameter.RNSSProtocolVersion)
+                    viewModel.XY_RDSSMode.postValue(parameter.RDSSMode)
+                    viewModel.XY_RNSSMode.postValue(parameter.RNSSMode)
+                    viewModel.XY_BLEMode.postValue(parameter.BLEMode)
+                    viewModel.XY_NETMode.postValue(parameter.NETMode)
+                    viewModel.XY_WorkMode.postValue(parameter.WorkMode)
+                    viewModel.XY_GGAFrequency.postValue(parameter.GGAFrequency)
+                    viewModel.XY_GSVFrequency.postValue(parameter.GSVFrequency)
+                    viewModel.XY_GLLFrequency.postValue(parameter.GLLFrequency)
+                    viewModel.XY_GSAFrequency.postValue(parameter.GSAFrequency)
+                    viewModel.XY_RMCFrequency.postValue(parameter.RMCFrequency)
+                    viewModel.XY_ZDAFrequency.postValue(parameter.ZDAFrequency)
+                    viewModel.XY_TimeZone.postValue(parameter.TimeZone)
+                    bdvm?.let {
+                        it.deviceBatteryLevel.postValue(parameter.BatteryLevel)
+                    }
+                    loge("A型设备参数变化 ${parameter.toString()}")
                 }
             }
 
             override fun OnDeviceBParameterChange(parameter: FDParameter?) {
-
+                parameter?.let {
+                    viewModel.FD_LocationReportID.postValue(parameter.LocationReportID)
+                    viewModel.FD_LocationReportFrequency.postValue(parameter.LocationReportFrequency)
+                    viewModel.FD_SOSID.postValue(parameter.SOSID)
+                    viewModel.FD_SOSFrequency.postValue(parameter.SOSFrequency)
+                    viewModel.FD_SOSContent.postValue(parameter.SOSContent)
+                    viewModel.FD_OverboardID.postValue(parameter.OverboardID)
+                    viewModel.FD_OverboardFrequency.postValue(parameter.OverboardFrequency)
+                    viewModel.FD_OverboardContent.postValue(parameter.OverboardContent)
+                    viewModel.FD_WorkMode.postValue(parameter.WorkMode)
+                    viewModel.FD_BatteryVoltage.postValue(parameter.BatteryVoltage)
+                    viewModel.FD_BatteryLevel.postValue(parameter.BatteryLevel)
+                    viewModel.FD_PositioningModuleStatus.postValue(parameter.PositioningModuleStatus)
+                    viewModel.FD_BDModuleStatus.postValue(parameter.BDModuleStatus)
+                    viewModel.FD_SoftwareVersion.postValue(parameter.SoftwareVersion)
+                    viewModel.FD_HardwareVersion.postValue(parameter.HardwareVersion)
+                    viewModel.FD_LocationStoragePeriod.postValue(parameter.LocationStoragePeriod)
+                    viewModel.FD_BluetoothName.postValue(parameter.BluetoothName)
+                    viewModel.FD_ExternalVoltage.postValue(parameter.ExternalVoltage)
+                    viewModel.FD_InternalVoltage.postValue(parameter.InternalVoltage)
+                    viewModel.FD_Temperature.postValue(parameter.Temperature)
+                    viewModel.FD_Humidity.postValue(parameter.Humidity)
+                    viewModel.FD_LocationsCount.postValue(parameter.LocationsCount)
+                    viewModel.FD_CardID.postValue(parameter.CardID)
+                    viewModel.FD_NumberOfResets.postValue(parameter.NumberOfResets)
+                    viewModel.FD_RNBleFeedback.postValue(parameter.RNBleFeedback)
+                    viewModel.FD_Power.postValue(parameter.Power)
+                }
             }
 
             override fun OnCommunicationFeedback(feedback: CommunicationFeedback?) {
@@ -216,10 +146,13 @@ class MainActivity : BaseMVVMActivity<ActivityMainBinding, MainVM>(true) {
 
             override fun OnBDLocationChange(location: BD_Location?) {
                 location?.let {
-                    viewModel.deviceLongitude.postValue(it.Longitude)
-                    viewModel.deviceLatitude.postValue(it.Latitude)
-                    viewModel.deviceAltitude.postValue(it.EllipsoidHeight)
-                    loge("卫星定位改变：${it.toString()}")
+                    bdvm?.let {
+                        it.deviceLongitude.postValue(location.Longitude)
+                        it.deviceLatitude.postValue(location.Latitude)
+                        it.deviceAltitude.postValue(location.EllipsoidHeight)
+                        loge("卫星定位改变：${location.toString()}")
+                    }
+
                 }
             }
 
@@ -235,57 +168,63 @@ class MainActivity : BaseMVVMActivity<ActivityMainBinding, MainVM>(true) {
                 }
             }
 
-        })
-    }
-
-    private val signal_text:MutableList<TextView> = mutableListOf()
-    private val signal_view:MutableList<ImageView> = mutableListOf()
-    var signal_total_high = 0 // 信号的总长度（文字 + 柱子）
-    var signal_text_high = 0 // 信号文字的长度
-    var signal_high = 0 // 信号的最长长度（总长度 - 文字长度）
-    var signal_variable = 5 // 信号的变量（ 信号的最长长度 / 最大信号值）
-
-    private fun init_signal(signals: IntArray) {
-
-        if (signals.size != signal_text.size) {
-            return
-        }
-        signal_text.forEachIndexed { index, textView ->
-            textView.text = signals[index].toString()
-            set_img_height(signal_view[index], signals[index])
-        }
-    }
-
-
-    fun set_img_height(img: ImageView, signal: Int) {
-        val params = img.layoutParams as LinearLayout.LayoutParams
-        when {
-            signal == 0 -> {
-                params.height = signal_variable
-                img.background = getDrawable(R.color.signal_1)
+            override fun OnCommandUnresolved(command: UnresolvedCommand?) {
+                command?.let {
+                    loge("收到未解析指令：${it.RawCommand} ")
+                }
             }
-            signal >= 50 -> params.height = 55 * signal_variable
-            else -> params.height = signal * signal_variable
-        }
-        img.layoutParams = params
-        img.background = getDrawable(when {
-            signal >= 40 -> R.color.signal_5
-            signal >= 30 -> R.color.signal_4
-            signal >= 20 -> R.color.signal_3
-            signal >= 10 -> R.color.signal_2
-            else -> R.color.signal_1
+
         })
     }
 
 
-    fun isLocationEnabled(): Boolean {
-        val locationManager = this.getSystemService(LOCATION_SERVICE) as LocationManager
-        if (locationManager != null) {
-            // 检查 GPS 定位是否开启
-            val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-            return isGpsEnabled
+    fun init_fragment() {
+        bdFragment = BDFragment()
+        deviceFragment = DeviceFragment()
+        viewBinding.bottomBar.setContainer(R.id.fragment) // 设置容器控件
+            .setOrientation(BottomBar.HORIZONTAL)
+            .setFirstChecked(0)
+            .setTitleIconMargin(8)
+            .setTitleBeforeAndAfterColor("#7f7f7f", "#008577") // 设置标题选中和未选中的颜色
+            .addItem(
+                bdFragment,
+                "北斗状态",
+                R.mipmap.bd_unchecked_icon,
+                R.mipmap.bd_checked_icon
+            )
+            .addItem(
+                deviceFragment,
+                "设备状态",
+                R.mipmap.status_unchecked_icon,
+                R.mipmap.status_checked_icon
+            ) // 添加页面
+            .buildWithEntity() // 构建
+
+        viewBinding.bottomBar.setOnSwitchListener(object : BottomBar.OnSwitchListener{
+            override fun result(position: Int,currentFragment: Fragment?) {
+
+            }
+        })
+
+// 测试组 ---------------------------------------------
+        viewBinding.test1.setOnClickListener {
+            loge("当前设置的过滤规则："+com.pancoit.mod_bluetooth.Global.Variable.matchingRules)
         }
-        return false
+
+        viewBinding.test2.setOnClickListener {
+            bdvm.deviceCardID.postValue("1111111")
+        }
+
+        viewBinding.test3.setOnClickListener {
+        }
+
+        viewBinding.test4.setOnClickListener {
+        }
+
+        viewBinding.test5.setOnClickListener {
+            throw RuntimeException("崩它！")
+        }
+
     }
 
     // 双击进入后台
@@ -305,5 +244,4 @@ class MainActivity : BaseMVVMActivity<ActivityMainBinding, MainVM>(true) {
         BaseConnector.connector?.disconnect()
         super.onDestroy()
     }
-
 }

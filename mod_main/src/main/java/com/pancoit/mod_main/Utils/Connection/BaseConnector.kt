@@ -22,7 +22,7 @@ abstract class BaseConnector {
     abstract suspend fun getDevices():List<Any>?  // 获取可用设备
     abstract fun initDevice()  // 初始化设备（下发指令）
     abstract fun sendMessage(targetCardNumber:String, type:Int, content_str:String)  // 发送消息
-
+    abstract fun sendCommand(str_hex:String)  // 下发原始数据
 
     // 连接设备
     open fun <T> connectDevice(

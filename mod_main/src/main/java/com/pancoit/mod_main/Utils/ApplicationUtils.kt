@@ -21,10 +21,18 @@ object ApplicationUtils {
     // 当前是否为debug环境
     fun isDebug() = isDebug
 
+    public var globalViewModelFactory : ViewModelProvider.AndroidViewModelFactory? = null
+    fun getGlobalFactory():ViewModelProvider.AndroidViewModelFactory{
+        if(globalViewModelFactory==null){
+            globalViewModelFactory = ViewModelProvider.AndroidViewModelFactory.getInstance(app)
+        }
+        return globalViewModelFactory!!
+    }
+
     // 获取全局单例 viewModel
     private var mainVM : ViewModel? = null
     fun <T : ViewModel> getGlobalViewModel(viewModelClass: Class<T>) : T{
-        if(mainVM ==null){
+        if(mainVM == null){
             mainVM = ViewModelProvider.AndroidViewModelFactory(app).create(viewModelClass)
         }
         return mainVM as T

@@ -3,10 +3,7 @@ package com.pancoit.mod_main.Utils.Connection
 import android.bluetooth.BluetoothDevice
 import android.util.Log
 import com.pancoit.mod_bluetooth.BLE.BluetoothTransfer
-import com.pancoit.mod_main.Utils.ApplicationUtils
-import com.pancoit.mod_main.Utils.Connection.BaseConnector
 import com.pancoit.mod_main.Utils.GlobalControlUtils
-import com.pancoit.mod_main.ViewModel.MainVM
 import com.pancoit.mod_parse.Protocol.ProtocolPackager
 import kotlinx.coroutines.*
 
@@ -85,4 +82,10 @@ class BLEConnector: BaseConnector() {
     override fun sendMessage(targetCardNumber: String, type: Int, content_str: String) {
         BluetoothTransfer.getInstance().writeHex(ProtocolPackager.CCTCQ(targetCardNumber,type,content_str))
     }
+
+    override fun sendCommand(str_hex: String) {
+        BluetoothTransfer.getInstance().writeHex(str_hex)
+    }
+
+
 }

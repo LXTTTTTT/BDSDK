@@ -1,0 +1,984 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="A型设备"
+            android:textColor="@color/black"
+            android:textSize="20dp"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="版本信息："/>
+
+                        <TextView
+                            android:id="@+id/xy_version"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="复位模式："/>
+
+                        <TextView
+                            android:id="@+id/xy_restartmode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="设备电量 (%)："/>
+
+                        <TextView
+                            android:id="@+id/xy_batterylevel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="报文长度限制 (bit)："/>
+
+                        <TextView
+                            android:id="@+id/xy_contentlength"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="温度 (°)："/>
+
+                        <TextView
+                            android:id="@+id/xy_temperature"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="湿度 (%)："/>
+
+                        <TextView
+                            android:id="@+id/xy_humidity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="气压 (pa)："/>
+
+                        <TextView
+                            android:id="@+id/xy_pressure"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="位置上报目标地址："/>
+
+                        <TextView
+                            android:id="@+id/xy_locationreportid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="定位方式："/>
+
+                        <TextView
+                            android:id="@+id/xy_positionmode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="采集频度："/>
+
+                        <TextView
+                            android:id="@+id/xy_collectionfrequency"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="位置个数："/>
+
+                        <TextView
+                            android:id="@+id/xy_positioncount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="上报协议类型："/>
+
+                        <TextView
+                            android:id="@+id/xy_reporttype"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="紧急救援中心号码："/>
+
+                        <TextView
+                            android:id="@+id/xy_sosid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SOS频度："/>
+
+                        <TextView
+                            android:id="@+id/xy_sosfrequency"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="报平安中心号码："/>
+
+                        <TextView
+                            android:id="@+id/xy_okid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="报平安内容："/>
+
+                        <TextView
+                            android:id="@+id/xy_okcontent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="输出的RDSS语句版本："/>
+
+                        <TextView
+                            android:id="@+id/xy_rdssprotocolversion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="输出的RNSS语句版本："/>
+
+                        <TextView
+                            android:id="@+id/xy_rnssprotocolversion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="RDSS工作模式："/>
+
+                        <TextView
+                            android:id="@+id/xy_rdssmode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="RNSS工作模式："/>
+
+                        <TextView
+                            android:id="@+id/xy_rnssmode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="蓝牙工作模式："/>
+
+                        <TextView
+                            android:id="@+id/xy_blemode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="网络工作模式："/>
+
+                        <TextView
+                            android:id="@+id/xy_netmode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="当前工作模式："/>
+
+                        <TextView
+                            android:id="@+id/xy_workmode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="GGA指令输出频度："/>
+
+                        <TextView
+                            android:id="@+id/xy_ggafrequency"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="GSV指令输出频度："/>
+
+                        <TextView
+                            android:id="@+id/xy_gsvfrequency"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="GLL指令输出频度："/>
+
+                        <TextView
+                            android:id="@+id/xy_gllfrequency"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="GSA指令输出频度："/>
+
+                        <TextView
+                            android:id="@+id/xy_gsafrequency"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="RMC指令输出频度："/>
+
+                        <TextView
+                            android:id="@+id/xy_rmcfrequency"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ZDA指令输出频度："/>
+
+                        <TextView
+                            android:id="@+id/xy_zdafrequency"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="时区："/>
+
+                        <TextView
+                            android:id="@+id/xy_timezone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="B型设备"
+            android:textColor="@color/black"
+            android:textSize="20dp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="位置上报目标地址："/>
+
+                        <TextView
+                            android:id="@+id/fd_locationreportid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="位置上报频度："/>
+
+                        <TextView
+                            android:id="@+id/fd_locationreportfrequency"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="紧急救援中心号码："/>
+
+                        <TextView
+                            android:id="@+id/fd_sosid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SOS频度："/>
+
+                        <TextView
+                            android:id="@+id/fd_sosfrequency"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SOS内容："/>
+
+                        <TextView
+                            android:id="@+id/fd_soscontent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="落水报警中心号码："/>
+
+                        <TextView
+                            android:id="@+id/fd_overboardid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="落水报警频度："/>
+
+                        <TextView
+                            android:id="@+id/fd_overboardfrequency"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="落水报警内容："/>
+
+                        <TextView
+                            android:id="@+id/fd_overboardcontent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="工作模式："/>
+
+                        <TextView
+                            android:id="@+id/fd_workmode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="电池电压 (0.01V)："/>
+
+                        <TextView
+                            android:id="@+id/fd_batteryvoltage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="设备电量 (%)："/>
+
+                        <TextView
+                            android:id="@+id/fd_batterylevel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="定位模块状态："/>
+
+                        <TextView
+                            android:id="@+id/fd_positioningmodulestatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="北斗模块状态："/>
+
+                        <TextView
+                            android:id="@+id/fd_bdmodulestatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="软件版本信息："/>
+
+                        <TextView
+                            android:id="@+id/fd_softwareversion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="硬件版本信息："/>
+
+                        <TextView
+                            android:id="@+id/fd_hardwareversion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="位置保存周期："/>
+
+                        <TextView
+                            android:id="@+id/fd_locationstorageperiod"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="蓝牙名称："/>
+
+                        <TextView
+                            android:id="@+id/fd_bluetoothname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="外电 (0.01V)："/>
+
+                        <TextView
+                            android:id="@+id/fd_externalvoltage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="内电 (0.01V)："/>
+
+                        <TextView
+                            android:id="@+id/fd_internalvoltage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="温度："/>
+
+                        <TextView
+                            android:id="@+id/fd_temperature"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="湿度："/>
+
+                        <TextView
+                            android:id="@+id/fd_humidity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="保存位置数："/>
+
+                        <TextView
+                            android:id="@+id/fd_locationscount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="设备卡号："/>
+
+                        <TextView
+                            android:id="@+id/fd_cardid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="复位次数："/>
+
+                        <TextView
+                            android:id="@+id/fd_numberofresets"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="RN蓝牙反馈状况："/>
+
+                        <TextView
+                            android:id="@+id/fd_rnblefeedback"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="功率："/>
+
+                        <TextView
+                            android:id="@+id/fd_power"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V1.0.0"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
+</LinearLayout>
