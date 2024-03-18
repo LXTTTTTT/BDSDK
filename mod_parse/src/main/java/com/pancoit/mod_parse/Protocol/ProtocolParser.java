@@ -6,7 +6,7 @@ import com.pancoit.mod_parse.CallBack.ParameterListener;
 import com.pancoit.mod_parse.Global.Variable;
 import com.pancoit.mod_parse.Parameter.BD_Location;
 import com.pancoit.mod_parse.Parameter.BD_Parameter;
-import com.pancoit.mod_parse.Parameter.CommunicationFeedback;
+import com.pancoit.mod_parse.Parameter.CommandFeedback;
 import com.pancoit.mod_parse.Parameter.FDParameter;
 import com.pancoit.mod_parse.Parameter.ReceivedMessage;
 import com.pancoit.mod_parse.Parameter.ResponseCommand;
@@ -32,7 +32,7 @@ public class ProtocolParser {
     private BD_Parameter bd_parameter;  // 北斗参数
     private XYParameter xyParameter;  // XY设备参数
     private FDParameter fdParameter;  // FD设备参数
-    private CommunicationFeedback communicationFeedback;  // FKI反馈信息
+    private CommandFeedback commandFeedback;  // FKI反馈信息
     private ReceivedMessage receivedMessage;  // 接收到的通信信息
     private BD_Location bd_location;  // 北斗位置
     private SatelliteStatus satelliteStatus;  // 卫星状态
@@ -45,7 +45,7 @@ public class ProtocolParser {
         bd_parameter = new BD_Parameter();
         xyParameter = new XYParameter();
         fdParameter = new FDParameter();
-        communicationFeedback = new CommunicationFeedback();
+        commandFeedback = new CommandFeedback();
         receivedMessage = new ReceivedMessage();
         bd_location = new BD_Location();
         satelliteStatus = new SatelliteStatus();
@@ -61,8 +61,8 @@ public class ProtocolParser {
     private void FDParameterChange(){
         if(parameterListener!=null){parameterListener.OnDeviceBParameterChange(fdParameter);}
     }
-    private void CommunicationFeedback(){
-        if(parameterListener!=null){parameterListener.OnCommunicationFeedback(communicationFeedback);}
+    private void CommandFeedback(){
+        if(parameterListener!=null){parameterListener.OnCommandFeedback(commandFeedback);}
     }
     private void ReceivedMessage(){
         if(parameterListener!=null){parameterListener.OnMessageReceived(receivedMessage);}
@@ -195,6 +195,7 @@ public class ProtocolParser {
                 bd_location.Valid = value[6].equals("A")? 1:0;
                 LocationChange();
             } else if (head.contains("GSA")){
+                // [$GNGSA, A, 1, , , , , , , , , , , , , , , , 1]
                 satelliteStatus.Smode = value[1];
                 satelliteStatus.FS = Integer.parseInt(value[2]);
                 int[] Satellite = {0,0,0,0,0,0,0,0,0,0,0,0};
@@ -206,9 +207,9 @@ public class ProtocolParser {
                     }
                 }
                 satelliteStatus.PositioningSatellite = Satellite;
-                satelliteStatus.PDOP = Double.parseDouble(value[15]);
-                satelliteStatus.HDOP = Double.parseDouble(value[16]);
-                satelliteStatus.VDOP = Double.parseDouble(value[17]);
+                if(!value[15].equals("")){satelliteStatus.PDOP = Double.parseDouble(value[15]);}
+                if(!value[16].equals("")){satelliteStatus.HDOP = Double.parseDouble(value[16]);}
+                if(!value[17].equals("")){satelliteStatus.VDOP = Double.parseDouble(value[17]);}
             } else if (head.contains("GSV")){
                 // $GPGSV,3,1,10,01,,,41,02,38,034,42,03,36,113,47,07,38,195,25,1*5B
                 // $GPGSV,3,3,10,20,25,214,,22,68,187,*7A
@@ -364,13 +365,13 @@ public class ProtocolParser {
                         break;
                 }
             }
-            communicationFeedback.Time = time;
-            communicationFeedback.Type = type;
-            communicationFeedback.Result = message_result;
-            communicationFeedback.Reason = reason;
-            communicationFeedback.Reason_str = reason_str;
-            communicationFeedback.Remain = remain;
-            CommunicationFeedback();
+            commandFeedback.Time = time;
+            commandFeedback.Type = type;
+            commandFeedback.Result = message_result;
+            commandFeedback.Reason = reason;
+            commandFeedback.Reason_str = reason_str;
+            commandFeedback.Remain = remain;
+            CommandFeedback();
         }catch (Exception e){
             loge("BDFKI: 解析错误");
             e.printStackTrace();

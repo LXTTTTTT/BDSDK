@@ -5,10 +5,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 import java.util.*
 
-// 全局使用 ViewModel
+// 北斗 ViewModel
 class BDVM : BaseViewModel() {
 
-    val TAG = "MainVM"
+    val TAG = "BDVM"
     val isConnectDevice : MutableLiveData<Boolean?> = MutableLiveData()  // 是否连接蓝牙
     val deviceCardID : MutableLiveData<String?> = MutableLiveData()  // 卡号
     val deviceCardFrequency : MutableLiveData<Int?> = MutableLiveData()  // 频度
@@ -33,7 +33,6 @@ class BDVM : BaseViewModel() {
         deviceCardLevel.postValue(-1)
         deviceBatteryLevel.postValue(-1)
         signal.postValue(intArrayOf(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0))
-//        unreadMessageCount.postValue(0)
         waitTime.postValue(0)
         deviceLongitude.postValue(0.0)
         deviceLatitude.postValue(0.0)

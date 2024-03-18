@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.pancoit.mod_parse.Utils.DataUtils;
 
+// 协议封装
 public class ProtocolPackager {
 
 // 标准北斗 -----------------------------------------------------------------------------------
@@ -372,7 +373,7 @@ public class ProtocolPackager {
     /**
      * 模式查询：
      * @param type 0-查询 1-设置
-     * @param mode 0-开启RN指令蓝牙透传 1-关闭RN指令蓝牙透传
+     * @param mode 0-关闭RN指令蓝牙透传 1-开启RN指令蓝牙透传
      * @return string_hex
      */
     public static String FLYRN(int type, int mode) {

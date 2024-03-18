@@ -2,8 +2,6 @@ package com.pancoit.mod_main.Activity
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.pancoit.mod_main.Base.BaseMVVMActivity
 import com.pancoit.mod_main.Fragment.BDFragment
 import com.pancoit.mod_main.Fragment.DeviceFragment
@@ -17,8 +15,13 @@ import com.pancoit.mod_main.ViewModel.DeviceVM
 import com.pancoit.mod_main.databinding.ActivityMainBinding
 import com.pancoit.mod_parse.CallBack.ParameterListener
 import com.pancoit.mod_parse.Parameter.*
+import com.pancoit.mod_parse.Protocol.ProtocolPackager
 import com.pancoit.mod_parse.Protocol.ProtocolParser
-import com.tbruyelle.rxpermissions3.RxPermissions
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.*
 
 
 class MainActivity : BaseMVVMActivity<ActivityMainBinding, DeviceVM>(false) {
@@ -33,27 +36,32 @@ class MainActivity : BaseMVVMActivity<ActivityMainBinding, DeviceVM>(false) {
     }
     override suspend fun initDataSuspend() {}
     override fun initData() {
-        super.initData()  // 在父类初始化 viewModel
+        super.initData()  // 在父类初始化 viewModel ，必须调用
         bdvm = ApplicationUtils.getGlobalViewModel(BDVM::class.java)
         init_parser_callback()
     }
 
     // 初始化数据解析SDK回调
     fun init_parser_callback(){
-        ProtocolParser.getInstance().showLog(true)
+
+        ProtocolParser.getInstance().showLog(true)  // 开启SDK日志打印
+        // 设置参数解析监听处理
         ProtocolParser.getInstance().setParameterListener(object : ParameterListener {
+
+            // 北斗参数变化
             override fun OnBDParameterChange(parameter: BD_Parameter?) {
                 parameter?.let {  parameter->
                     bdvm?.let {
                         it.deviceCardID.postValue(parameter.CardID)
                         it.deviceCardLevel.postValue(parameter.CardLevel)
                         it.deviceCardFrequency.postValue(parameter.CardFrequency)
-//                    it.deviceBatteryLevel.postValue(parameter.BatteryLevel)
                         it.signal.postValue(parameter.Signal)
                     }
+                    loge("北斗参数变化：${parameter.toString()}")
                 }
             }
 
+            // A型设备参数变化
             override fun OnDeviceAParameterChange(parameter: XYParameter?) {
                 parameter?.let {
                     viewModel.XY_Version.postValue(parameter.Version)
@@ -89,10 +97,11 @@ class MainActivity : BaseMVVMActivity<ActivityMainBinding, DeviceVM>(false) {
                     bdvm?.let {
                         it.deviceBatteryLevel.postValue(parameter.BatteryLevel)
                     }
-                    loge("A型设备参数变化 ${parameter.toString()}")
+                    loge("A型设备参数变化：${parameter.toString()}")
                 }
             }
 
+            // B型设备参数变化
             override fun OnDeviceBParameterChange(parameter: FDParameter?) {
                 parameter?.let {
                     viewModel.FD_LocationReportID.postValue(parameter.LocationReportID)
@@ -121,12 +130,16 @@ class MainActivity : BaseMVVMActivity<ActivityMainBinding, DeviceVM>(false) {
                     viewModel.FD_NumberOfResets.postValue(parameter.NumberOfResets)
                     viewModel.FD_RNBleFeedback.postValue(parameter.RNBleFeedback)
                     viewModel.FD_Power.postValue(parameter.Power)
+                    bdvm?.let {
+                        it.deviceBatteryLevel.postValue(parameter.BatteryLevel)
+                    }
+                    loge("B型设备参数变化：${parameter.toString()}")
                 }
             }
 
-            override fun OnCommunicationFeedback(feedback: CommunicationFeedback?) {
+            // 北斗指令下发反馈
+            override fun OnCommandFeedback(feedback: CommandFeedback?) {
                 feedback?.let {
-                    loge("指令下发反馈：${it.toString()}")
                     if(it.Type.equals("TCQ")){
                         if(it.Result){
                             GlobalControlUtils.showToast("消息发送成功",0)
@@ -134,43 +147,49 @@ class MainActivity : BaseMVVMActivity<ActivityMainBinding, DeviceVM>(false) {
                             GlobalControlUtils.showToast("消息发送失败",0)
                         }
                     }
+                    loge("指令下发反馈：${it.toString()}")
                 }
             }
 
+            // 消息接收
             override fun OnMessageReceived(message: ReceivedMessage?) {
                 message?.let {
                     loge("收到卫星消息：${it.toString()}")
-                    GlobalControlUtils.showToast("收到 ${it.SendID} 消息：${it.Content}",0)
+                    GlobalControlUtils.showToast("收到来自 ${it.SendID} 的消息：${it.Content}",0)
+                    GlobalControlUtils.ringBell()
                 }
             }
 
+            // 北斗定位参数变化
             override fun OnBDLocationChange(location: BD_Location?) {
                 location?.let {
                     bdvm?.let {
                         it.deviceLongitude.postValue(location.Longitude)
                         it.deviceLatitude.postValue(location.Latitude)
                         it.deviceAltitude.postValue(location.EllipsoidHeight)
-                        loge("卫星定位改变：${location.toString()}")
+                        loge("北斗定位参数变化：${location.toString()}")
                     }
-
                 }
             }
 
+            // 卫星状态参数变化
             override fun OnSatelliteStatusChange(status: SatelliteStatus?) {
                 status?.let {
                     loge("卫星状态改变：${it.toString()}")
                 }
             }
 
+            // 设备指令下发响应
             override fun OnCommandResponse(command: ResponseCommand?) {
                 command?.let {
                     loge("收到响应指令，指令类型：${it.Command} 响应结果：${it.Result} 其它说明：${it.Remark}")
                 }
             }
 
+            // 未解析指令接收
             override fun OnCommandUnresolved(command: UnresolvedCommand?) {
                 command?.let {
-                    loge("收到未解析指令：${it.RawCommand} ")
+                    loge("收到未解析指令：${Arrays.toString(it.RawCommand)} ")
                 }
             }
 
@@ -202,23 +221,31 @@ class MainActivity : BaseMVVMActivity<ActivityMainBinding, DeviceVM>(false) {
 
         viewBinding.bottomBar.setOnSwitchListener(object : BottomBar.OnSwitchListener{
             override fun result(position: Int,currentFragment: Fragment?) {
-
+                loge("页面切换：$position")
             }
         })
 
-// 测试组 ---------------------------------------------
+// 测试按键组 ---------------------------------------------
         viewBinding.test1.setOnClickListener {
-            loge("当前设置的过滤规则："+com.pancoit.mod_bluetooth.Global.Variable.matchingRules)
+            loge("当前设置的蓝牙过滤规则："+com.pancoit.mod_bluetooth.Global.Variable.matchingRules)
+            BaseConnector.connector?.sendCommand(ProtocolPackager.FLYRN(1,1))
         }
 
         viewBinding.test2.setOnClickListener {
-            bdvm.deviceCardID.postValue("1111111")
+            BaseConnector.connector?.sendCommand(ProtocolPackager.FLYRN(1,0))
         }
 
         viewBinding.test3.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch{
+                BaseConnector.connector?.let {
+                    delay(300)
+                    it.sendCommand(ProtocolPackager.CCICR(0,"00"))
+                }
+            }
         }
 
         viewBinding.test4.setOnClickListener {
+            BaseConnector.connector?.sendMessage(bdvm.deviceCardID.value!!,2,"test")
         }
 
         viewBinding.test5.setOnClickListener {

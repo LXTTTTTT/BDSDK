@@ -16,7 +16,6 @@ abstract class BaseMVVMActivity<VB : ViewBinding ,VM : ViewModel>(global_model:B
     override fun initData() {
         // 反射创建 ViewModel 对象
         val argument = (this.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments
-
         if(global){loge("使用全局ViewModel")}else{loge("使用临时ViewModel")}
         viewModel = if(global)
             ApplicationUtils.getGlobalViewModel(argument[1] as Class<VM>)!!  // 使用全局 ViewModel

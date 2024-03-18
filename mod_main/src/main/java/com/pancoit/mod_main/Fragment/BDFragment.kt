@@ -75,11 +75,12 @@ class BDFragment : BaseMVVMFragment<FragmentBdBinding,BDVM>(true) {
                                 startActivity(enableLocation)
                             }
                             if(isBluetoothEnable && isLocationEnabled){
+                                // 初始化连接器
                                 if(BaseConnector.connector==null){
                                     val connector = BLEConnector()
                                     BaseConnector.setConnector(connector)
                                 }
-                                ARouter.getInstance().build(Constant.CONNECT_BLUETOOTH_ACTIVITY).navigation()
+                                ARouter.getInstance().build(Constant.CONNECT_BLUETOOTH_ACTIVITY).navigation()  // 页面跳转
                             }else{
                                 GlobalControlUtils.showToast("请先打开系统蓝牙和定位功能！",0)
                             }
@@ -172,48 +173,50 @@ class BDFragment : BaseMVVMFragment<FragmentBdBinding,BDVM>(true) {
                 }
             }
         })
-
+        // 卡号
         viewModel.deviceCardID.observe(this,{
             it?.let {
-                loge("监听到卡号变化 $it")
+                loge("监听到卡号变化：$it")
                 viewBinding.cardId.setText(it)
             }
         })
-
+        // 频度
         viewModel.deviceCardFrequency.observe(this,{
             it?.let {
                 viewBinding.frequency.setText(it.toString())
             }
         })
-
+        // 等级
         viewModel.deviceCardLevel.observe(this,{
             it?.let {
                 viewBinding.level.setText(it.toString())
             }
         })
-
+        // 电量
         viewModel.deviceBatteryLevel.observe(this,{
             it?.let {
                 viewBinding.battery.setText(it.toString())
             }
         })
-
+        // 信号
         viewModel.signal.observe(this,{
             it?.let {
                 init_signal(it)
             }
         })
-
+        // 经度
         viewModel.deviceLongitude.observe(this,{
             it?.let {
                 viewBinding.longitude.setText(it.toString())
             }
         })
+        // 纬度
         viewModel.deviceLatitude.observe(this,{
             it?.let {
                 viewBinding.latitude.setText(it.toString())
             }
         })
+        // 高度
         viewModel.deviceAltitude.observe(this,{
             it?.let {
                 viewBinding.altitude.setText(it.toString())
@@ -230,7 +233,6 @@ class BDFragment : BaseMVVMFragment<FragmentBdBinding,BDVM>(true) {
     var signal_variable = 5 // 信号的变量（ 信号的最长长度 / 最大信号值）
 
     private fun init_signal(signals: IntArray) {
-
         if (signals.size != signal_text.size) {
             return
         }
@@ -260,7 +262,6 @@ class BDFragment : BaseMVVMFragment<FragmentBdBinding,BDVM>(true) {
             else -> R.color.signal_1
         })
     }
-
 
     fun isLocationEnabled(): Boolean {
         val locationManager = my_context.getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager

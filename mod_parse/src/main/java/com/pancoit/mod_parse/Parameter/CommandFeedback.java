@@ -1,6 +1,6 @@
 package com.pancoit.mod_parse.Parameter;
 
-public class CommunicationFeedback {
+public class CommandFeedback {
     public String Time = "000000";
     public String Type = "unknown";
     public boolean Result = false;
@@ -10,7 +10,7 @@ public class CommunicationFeedback {
 
     @Override
     public String toString() {
-        return "CommunicationFeedback{" +
+        return "CommandFeedback{" +
                 "Time='" + Time + '\'' +
                 ", Type='" + Type + '\'' +
                 ", Result=" + Result +

@@ -30,6 +30,33 @@ public class BD_Parameter {
     public int NumberOfSelfBuiltGroups = -1;  // 自建组数
     public int NumberOfGroupsToJoin = -1;  // 加入组数量
 
-
-
+    @Override
+    public String toString() {
+        return "BD_Parameter{" +
+                "CardID='" + CardID + '\'' +
+                ", CardFrequency=" + CardFrequency +
+                ", CardLevel=" + CardLevel +
+                ", Signal=" + Arrays.toString(Signal) +
+                ", BroadcastID='" + BroadcastID + '\'' +
+                ", AuthorizationType=" + AuthorizationType +
+                ", UserIdentity=" + UserIdentity +
+                ", ServiceIdentity=" + ServiceIdentity +
+                ", EnableConfidentiality='" + EnableConfidentiality + '\'' +
+                ", DeviceType=" + DeviceType +
+                ", IsRescue='" + IsRescue + '\'' +
+                ", Military=" + Military +
+                ", Civil_Military=" + Civil_Military +
+                ", Allies=" + Allies +
+                ", UserPriority=" + UserPriority +
+                ", ServiceCapabilities=" + ServiceCapabilities +
+                ", GlobalIdentity=" + GlobalIdentity +
+                ", GlobalMessageInteractionPermissions=" + GlobalMessageInteractionPermissions +
+                ", GlobalMessageFrequency=" + GlobalMessageFrequency +
+                ", GlobalMessageLevel=" + GlobalMessageLevel +
+                ", NumberOfSubordinateUsers=" + NumberOfSubordinateUsers +
+                ", GroupPermissions=" + GroupPermissions +
+                ", NumberOfSelfBuiltGroups=" + NumberOfSelfBuiltGroups +
+                ", NumberOfGroupsToJoin=" + NumberOfGroupsToJoin +
+                '}';
+    }
 }

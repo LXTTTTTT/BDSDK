@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 import java.util.*
 
-// 全局使用 ViewModel
+// 设备 ViewModel
 class DeviceVM : BaseViewModel() {
 
     val TAG = "DeviceVM"

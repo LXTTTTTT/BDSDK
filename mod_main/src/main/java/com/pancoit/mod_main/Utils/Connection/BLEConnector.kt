@@ -24,7 +24,7 @@ class BLEConnector: BaseConnector() {
             before = {
                 GlobalControlUtils.showLoadingDialog("正在连接");
             },
-            // 蓝牙连接前置条件
+            // 蓝牙连接前置条件，已在进入页面前处理直接返回 true
             condition = object :()->Boolean{
                 override fun invoke(): Boolean {
                     return true
@@ -60,7 +60,7 @@ class BLEConnector: BaseConnector() {
             withContext(Dispatchers.IO){
                 delay(500)
                 BluetoothTransfer.getInstance().writeHex(ProtocolPackager.CCPWD(5,"000020"))
-                delay(300)
+                delay(1000)
                 BluetoothTransfer.getInstance().writeHex(ProtocolPackager.CCICR(0,"00"))
                 delay(300)
                 BluetoothTransfer.getInstance().writeHex(ProtocolPackager.CCRMO("PWI",2,5))
@@ -72,6 +72,8 @@ class BLEConnector: BaseConnector() {
                 BluetoothTransfer.getInstance().writeHex(ProtocolPackager.CCRNS(5,5,5,5,5,5))
                 delay(300)
                 BluetoothTransfer.getInstance().writeHex(ProtocolPackager.CCRMO("MCH",1,0))
+                delay(1000)
+                BluetoothTransfer.getInstance().writeHex(ProtocolPackager.FLYRN(1,1))  // 开启FD设备RN蓝牙输出
             }
         }
 

@@ -28,4 +28,35 @@ public class FDParameter {
     public int RNBleFeedback = -1;  // RN蓝牙反馈状况
     public String Power = "-";  // 功率
 
+    @Override
+    public String toString() {
+        return "FDParameter{" +
+                "LocationReportID='" + LocationReportID + '\'' +
+                ", LocationReportFrequency=" + LocationReportFrequency +
+                ", SOSID='" + SOSID + '\'' +
+                ", SOSFrequency=" + SOSFrequency +
+                ", SOSContent='" + SOSContent + '\'' +
+                ", OverboardID='" + OverboardID + '\'' +
+                ", OverboardFrequency=" + OverboardFrequency +
+                ", OverboardContent='" + OverboardContent + '\'' +
+                ", WorkMode=" + WorkMode +
+                ", BatteryVoltage=" + BatteryVoltage +
+                ", BatteryLevel=" + BatteryLevel +
+                ", PositioningModuleStatus=" + PositioningModuleStatus +
+                ", BDModuleStatus=" + BDModuleStatus +
+                ", SoftwareVersion='" + SoftwareVersion + '\'' +
+                ", HardwareVersion='" + HardwareVersion + '\'' +
+                ", LocationStoragePeriod=" + LocationStoragePeriod +
+                ", BluetoothName='" + BluetoothName + '\'' +
+                ", ExternalVoltage=" + ExternalVoltage +
+                ", InternalVoltage=" + InternalVoltage +
+                ", Temperature=" + Temperature +
+                ", Humidity=" + Humidity +
+                ", LocationsCount=" + LocationsCount +
+                ", CardID='" + CardID + '\'' +
+                ", NumberOfResets=" + NumberOfResets +
+                ", RNBleFeedback=" + RNBleFeedback +
+                ", Power='" + Power + '\'' +
+                '}';
+    }
 }
