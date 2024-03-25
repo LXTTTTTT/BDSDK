@@ -72,8 +72,8 @@ dependencies {
     implementation rootProject.depsLibs.liveDataKtx
 
 // 导入模块 ---------------------------------------------------
-    api project(path: ':mod_bluetooth')
-//    api project(path: ':LocalRepo:bdsdk_bluetooth_aar')
-    api project(path: ':mod_parse')
-//    api project(path: ':LocalRepo:bdsdk_parser_aar')
+//    api project(path: ':mod_bluetooth')
+    api project(path: ':LocalRepo:bdsdk_bluetooth_aar')
+//    api project(path: ':mod_parse')
+    api project(path: ':LocalRepo:bdsdk_parser_aar')
 }

@@ -10,7 +10,7 @@ public class BD_Location {
     public String LatitudeIndication = "N";
     public double EllipsoidHeight = 0.0d;  // 椭球高
     public String UnitOfEH = "M";  // 椭球高单位
-    public double Speed = 0.0d;  // 速度 km/h
+    public double Speed = 0.0d;  // 速度 (km/h)
     // $GNGLL,2309.30960,N,11330.00645,E,070727.00,A,A*71
     public int Valid = -1;  // 有效性
     public int NoSV = -1;  // 参与定位卫星数量

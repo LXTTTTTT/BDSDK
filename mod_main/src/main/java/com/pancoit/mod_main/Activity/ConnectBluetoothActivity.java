@@ -2,6 +2,7 @@ package com.pancoit.mod_main.Activity;
 
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -20,8 +21,20 @@ import com.pancoit.mod_main.Utils.Connection.BaseConnector;
 import com.pancoit.mod_main.Utils.GlobalControlUtils;
 import com.pancoit.mod_main.ViewModel.BDVM;
 import com.pancoit.mod_main.databinding.ActivityConnectBluetoothBinding;
+import com.pancoit.mod_parse.CallBack.ParameterListener;
+import com.pancoit.mod_parse.Parameter.BD_Location;
+import com.pancoit.mod_parse.Parameter.BD_Parameter;
+import com.pancoit.mod_parse.Parameter.CommandFeedback;
+import com.pancoit.mod_parse.Parameter.FDParameter;
+import com.pancoit.mod_parse.Parameter.ReceivedMessage;
+import com.pancoit.mod_parse.Parameter.ResponseCommand;
+import com.pancoit.mod_parse.Parameter.SatelliteStatus;
+import com.pancoit.mod_parse.Parameter.UnresolvedCommand;
+import com.pancoit.mod_parse.Parameter.XYParameter;
+import com.pancoit.mod_parse.Protocol.ProtocolPackager;
 import com.pancoit.mod_parse.Protocol.ProtocolParser;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 

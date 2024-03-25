@@ -56,7 +56,7 @@ public class BluetoothTransfer {
     private volatile boolean data_send_complete = true;  // 数据发送完成标识
     private Queue<byte[]> queue = new LinkedList();  // 消息队列
     private Queue<byte[]> remainQueue = null;
-    public String deviceAddress = "";
+    private String deviceAddress = "";
 
     private static BluetoothTransfer bluetoothTransferUtil;
     public static BluetoothTransfer getInstance() {
@@ -229,7 +229,7 @@ public class BluetoothTransfer {
     };
 
     // 通过设备连接
-    public boolean connectDevice(final BluetoothDevice device) {
+    public void connectDevice(final BluetoothDevice device) {
         stopDiscovery();
         deviceAddress = device.getAddress();
         // 子线程连接
@@ -246,7 +246,6 @@ public class BluetoothTransfer {
                 }
             }
         }.start();
-        return true;
     }
 
     // 通过地址连接
@@ -263,14 +262,18 @@ public class BluetoothTransfer {
                             bluetoothGatt.close();
                             bluetoothGatt = null;
                         }
-                        bluetoothGatt = device.connectGatt(context, false, bluetoothGattCallback);
+                        if (Build.VERSION.SDK_INT >= 23) {
+                            bluetoothGatt = device.connectGatt(context, false, bluetoothGattCallback, BluetoothDevice.TRANSPORT_LE);  // 低功耗
+                        } else {
+                            bluetoothGatt = device.connectGatt(context, false, bluetoothGattCallback);
+                        }
                     }
                 }
             }
         }.start();
     }
 
-    public boolean setMtu() {
+    private boolean setMtu() {
         if(bluetoothGatt==null) return false;
         if (Build.VERSION.SDK_INT >= 21) {
             return bluetoothGatt.requestMtu(max_mtu);
@@ -278,7 +281,7 @@ public class BluetoothTransfer {
         return false;
     }
 
-    public void write(byte[] data_bytes) {
+    private void write(byte[] data_bytes) {
         if(writeCharacteristic==null || bluetoothGatt==null) return;
         writeCharacteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT);
         writeCharacteristic.setValue(data_bytes);
@@ -309,7 +312,7 @@ public class BluetoothTransfer {
         }
     }
 
-    protected synchronized void send(byte[] bytes) {
+    private synchronized void send(byte[] bytes) {
         ExecutorService executorService = DispatcherExecutor.INSTANCE.getIOExecutor();
         if(executorService!=null){
             executorService.execute(new Runnable() {
@@ -336,7 +339,7 @@ public class BluetoothTransfer {
     }
 
     // 将字节数组按照指定的大小拆分成一个数组列表
-    public static List<byte[]> splitPackage(byte[] src, int size) {
+    private static List<byte[]> splitPackage(byte[] src, int size) {
         List<byte[]> list = new ArrayList<>();
         int loop = (src.length + size - 1) / size;
 
@@ -351,7 +354,7 @@ public class BluetoothTransfer {
         return list;
     }
 
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    private ByteArrayOutputStream baos = new ByteArrayOutputStream();
     private byte[] readBuffer = new byte[1024 * 2];  // 缓冲区
     // 这里处理接收到的数据
     private void receiveData(BluetoothGattCharacteristic characteristic) {
@@ -510,11 +513,11 @@ public class BluetoothTransfer {
     }
 
 // 接口 ---------------------------------------
-    public OnBluetoothWork onBluetoothWork;
+    private OnBluetoothWork onBluetoothWork;
     public void setOnBluetoothWork(OnBluetoothWork onBluetoothWork){
         this.onBluetoothWork = onBluetoothWork;
     }
-    public OnBluetoothTransfer onBluetoothTransfer;
+    private OnBluetoothTransfer onBluetoothTransfer;
     public void setOnBluetoothTransfer(OnBluetoothTransfer onBluetoothTransfer){
         this.onBluetoothTransfer = onBluetoothTransfer;
     }

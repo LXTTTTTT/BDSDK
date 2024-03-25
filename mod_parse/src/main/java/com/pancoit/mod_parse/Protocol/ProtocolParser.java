@@ -19,7 +19,7 @@ import java.util.Arrays;
 
 public class ProtocolParser {
 
-    public static String TAG = "ProtocolParser";
+    private static String TAG = "ProtocolParser";
 
     private static ProtocolParser parser;
     public static ProtocolParser getInstance() {
@@ -166,7 +166,7 @@ public class ProtocolParser {
     }
 
     // 解析 RNSS 位置数据
-    public void parseRNSS(String[] value){
+    private void parseRNSS(String[] value){
         try {
             // 拆分数据
             String head = value[0];
@@ -289,7 +289,7 @@ public class ProtocolParser {
     // 标准北斗 -----------------------------------------------------
     // ICP 卡号、频度等
     // $BDICP,15240507,2032472,1,3,0,N,1,Y,1,0,0,3,1,1,5,1,1,2,2,500,100,10,10*65
-    public void BDICP(String[] value){
+    private void BDICP(String[] value){
         try {
             String cardId = value[1];
             int cardFre = Integer.parseInt(value[14]);
@@ -334,7 +334,7 @@ public class ProtocolParser {
     // 通信申请后的反馈信息
     // [$BDFKI, TXA, N, Y, 4, 0000]  北二
     // [$BDFKI, 080432, TCQ, Y, 0, 0]  北三
-    public void BDFKI(String[] value){
+    private void BDFKI(String[] value){
         try {
             String time = value[1];
             String type = value[2];  // 指令类型
@@ -380,7 +380,7 @@ public class ProtocolParser {
 
     // PWI 功率信息
     // $BDPWI,000000.00,00,01,51,40,33,0*7B
-    public void BDPWI(String[] value){
+    private void BDPWI(String[] value){
         try {
             int rdss2Count1 = Integer.parseInt(value[2]);
             int index = 2+rdss2Count1*3+1;
@@ -410,7 +410,7 @@ public class ProtocolParser {
 
     // [$BDTCI, 04207733, 4207733, 2, 023242, 2, 0, 90000000000065BEF749B2E2CAD4]
     // $BDTXR,1,4207733,1,2337,90000000000065C1FAF4B2E2CAD4*3F
-    public void BDMessage(String[] value){
+    private void BDMessage(String[] value){
         try {
             int from = 0;  // 带了个0，先转化为int
             String to = "0";
@@ -448,7 +448,7 @@ public class ProtocolParser {
     // XY -----------------------------------------------------
     // 收到了 ZDX 盒子信息
     // [$BDZDX, 4207733, 036, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 60, 2, 1835, 0, 68.06, 52, 102706]
-    public void BDZDX(String[] value){
+    private void BDZDX(String[] value){
         try {
             String cardId = value[1];
             int cardFre = Integer.parseInt(value[24]);
@@ -498,7 +498,7 @@ public class ProtocolParser {
 
     // ICI 卡号、频度等
     // $BDICI,4207733,0,0,3,60,2,N,22*3A
-    public void BDICI(String[] value){
+    private void BDICI(String[] value){
         try {
             String cardId = value[1];
             int cardFre = Integer.parseInt(value[5]);
@@ -526,7 +526,7 @@ public class ProtocolParser {
 
     // $BDSNR,0,0,0,0,0,0,48,0,0,0,0,0,41,0,0,0,44,44,0,0,0*5C
     // SNR 功率信息
-    public void BDSNR(String[] value){
+    private void BDSNR(String[] value){
         try {
             int s21[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
             for (int i = 0; i < value.length; i++) {
@@ -544,7 +544,7 @@ public class ProtocolParser {
     }
 
     // $BDVRX,c--c
-    public void BDVRX(String[] value){
+    private void BDVRX(String[] value){
         try {
             xyParameter.Version = value[1];
             XYParameterChange();
@@ -556,7 +556,7 @@ public class ProtocolParser {
     }
 
     // $BDRSX,x*hh
-    public void BDRSX(String[] value){
+    private void BDRSX(String[] value){
         try {
             ResponseCommand command = new ResponseCommand();
             command.Raw = value;
@@ -575,7 +575,7 @@ public class ProtocolParser {
     }
 
     // $BDDEF,OK*69
-    public void BDDEF(String[] value){
+    private void BDDEF(String[] value){
         try {
             ResponseCommand command = new ResponseCommand();
             command.Raw = value;
@@ -592,7 +592,7 @@ public class ProtocolParser {
     }
 
     // $BDBTX,1*55
-    public void BDBTX(String[] value){
+    private void BDBTX(String[] value){
         try {
             ResponseCommand command = new ResponseCommand();
             command.Raw = value;
@@ -609,7 +609,7 @@ public class ProtocolParser {
     }
 
     // $BDUGX,x,x,xxxxxxxxxxx,…,xxxxxxxxxxx*hh
-    public void BDUGX(String[] value){
+    private void BDUGX(String[] value){
         try {
             ResponseCommand command = new ResponseCommand();
             command.Raw = value;
@@ -625,7 +625,7 @@ public class ProtocolParser {
     }
 
     // $BDPRX,xxxxxxxxxxx<1>,x<2>,xxxxx<3>,xx<4>,x<5>*hh
-    public void BDPRX(String[] value){
+    private void BDPRX(String[] value){
         try {
             xyParameter.LocationReportID = value[1];
             xyParameter.PositionMode = Integer.parseInt(value[2]);
@@ -641,7 +641,7 @@ public class ProtocolParser {
     }
 
     // $BDYPX,x<1>,x<2>*hh
-    public void BDYPX(String[] value){
+    private void BDYPX(String[] value){
         try {
             xyParameter.RDSSProtocolVersion = Integer.parseInt(value[1]);
             xyParameter.RNSSProtocolVersion = Integer.parseInt(value[2]);
@@ -654,7 +654,7 @@ public class ProtocolParser {
     }
 
     // $BDMDX,x<1>,x<2>,x<3>,x<4>*hh
-    public void BDMDX(String[] value){
+    private void BDMDX(String[] value){
         try {
             xyParameter.RDSSMode = Integer.parseInt(value[1]);
             xyParameter.RNSSMode = Integer.parseInt(value[2]);
@@ -669,7 +669,7 @@ public class ProtocolParser {
     }
 
     // $BDHMX,xxxxxxxxxxx<1>,xxxxx<2>*hh
-    public void BDHMX(String[] value){
+    private void BDHMX(String[] value){
         try {
             xyParameter.SOSID = value[1];
             xyParameter.SOSFrequency = Integer.parseInt(value[2]);
@@ -682,7 +682,7 @@ public class ProtocolParser {
     }
 
     // $BDQDX,x<1>*hh
-    public void BDQDX(String[] value){
+    private void BDQDX(String[] value){
         try {
             ResponseCommand command = new ResponseCommand();
             command.Raw = value;
@@ -703,7 +703,7 @@ public class ProtocolParser {
     }
 
     // $BDTRA,x<1>*hh
-    public void BDTRA(String[] value){
+    private void BDTRA(String[] value){
         try {
             xyParameter.WorkMode = Integer.parseInt(value[1]);
             XYParameterChange();
@@ -715,7 +715,7 @@ public class ProtocolParser {
     }
 
     // $BDZTX,*7C
-    public void BDZTX(String[] value){
+    private void BDZTX(String[] value){
         try {
             ResponseCommand command = new ResponseCommand();
             command.Raw = value;
@@ -731,7 +731,7 @@ public class ProtocolParser {
     }
 
     // $BDRNX,5,5,5,5,5,5,8*56
-    public void BDRNX(String[] value){
+    private void BDRNX(String[] value){
         try {
             xyParameter.GGAFrequency = Integer.parseInt(value[1]);
             xyParameter.GSVFrequency = Integer.parseInt(value[2]);
@@ -749,7 +749,7 @@ public class ProtocolParser {
     }
 
     // $BDOKX,15950044,我已安全，请放心,*7C
-    public void BDOKX(String[] value){
+    private void BDOKX(String[] value){
         try {
             xyParameter.OKID = value[1];
             xyParameter.OKContent = value[2];
@@ -762,7 +762,7 @@ public class ProtocolParser {
     }
 
     // $BDPWX,5,1*hh
-    public void BDPWX(String[] value){
+    private void BDPWX(String[] value){
         try {
             ResponseCommand command = new ResponseCommand();
             command.Raw = value;
@@ -780,7 +780,7 @@ public class ProtocolParser {
 
     // FD -----------------------------------------------------
     // $DWZXX, INT, INT*XX
-    public void DWZXX(String[] value){
+    private void DWZXX(String[] value){
         try {
             fdParameter.LocationReportID = value[1];
             fdParameter.LocationReportFrequency = Integer.parseInt(value[2]);
@@ -793,7 +793,7 @@ public class ProtocolParser {
     }
 
     // $DBJXX,X,X,STR*XX
-    public void DBJXX(String[] value){
+    private void DBJXX(String[] value){
         try {
             fdParameter.SOSID = value[1];
             fdParameter.SOSFrequency = Integer.parseInt(value[2]);
@@ -807,7 +807,7 @@ public class ProtocolParser {
     }
 
     // $DMSXX,X*XX
-    public void DMSXX(String[] value){
+    private void DMSXX(String[] value){
         try {
             fdParameter.WorkMode = Integer.parseInt(value[1]);
             FDParameterChange();
@@ -819,7 +819,7 @@ public class ProtocolParser {
     }
 
     // $DDLXX, INT,INT*XX
-    public void DDLXX(String[] value){
+    private void DDLXX(String[] value){
         try {
             fdParameter.BatteryVoltage = Integer.parseInt(value[1]);
             fdParameter.BatteryLevel = Integer.parseInt(value[2]);
@@ -832,7 +832,7 @@ public class ProtocolParser {
     }
 
     // $DPWXX,X,X*XX
-    public void DPWXX(String[] value){
+    private void DPWXX(String[] value){
         try {
             fdParameter.PositioningModuleStatus = Integer.parseInt(value[1]);
             fdParameter.BDModuleStatus = Integer.parseInt(value[2]);
@@ -845,7 +845,7 @@ public class ProtocolParser {
     }
 
     // $DBBXX,STR,STR*XX
-    public void DBBXX(String[] value){
+    private void DBBXX(String[] value){
         try {
             fdParameter.SoftwareVersion = value[1];
             fdParameter.HardwareVersion = value[2];
@@ -858,7 +858,7 @@ public class ProtocolParser {
     }
 
     // $BCZQXX,INT,INT*XX
-    public void BCZQXX(String[] value){
+    private void BCZQXX(String[] value){
         try {
             fdParameter.LocationStoragePeriod = Integer.parseInt(value[1]);
             FDParameterChange();
@@ -870,7 +870,7 @@ public class ProtocolParser {
     }
 
     // $DLYXX,STR*XX
-    public void DLYXX(String[] value){
+    private void DLYXX(String[] value){
         try {
             fdParameter.BluetoothName = value[1];
             FDParameterChange();
@@ -882,7 +882,7 @@ public class ProtocolParser {
     }
 
     // $DYJXX,STR,STR,INT,FLOAT,FLOAT,INT,INT,STR,INT,INT,INT,STR,INT,INT,INT,STR*XX
-    public void DYJXX(String[] value){
+    private void DYJXX(String[] value){
         try {
             fdParameter.SoftwareVersion = value[1];
             fdParameter.HardwareVersion = value[2];
@@ -911,7 +911,7 @@ public class ProtocolParser {
     }
 
     // $DLYRN,X*XX
-    public void DLYRN(String[] value){
+    private void DLYRN(String[] value){
         try {
             fdParameter.RNBleFeedback = Integer.parseInt(value[1]);
             FDParameterChange();
@@ -923,7 +923,7 @@ public class ProtocolParser {
     }
 
     // $BDWAX,INT,INT,INT,INT,STR*XX
-    public void BDWAX(String[] value){
+    private void BDWAX(String[] value){
         try {
             fdParameter.OverboardID = value[1];
             fdParameter.OverboardFrequency = Integer.parseInt(value[2]);
@@ -937,7 +937,7 @@ public class ProtocolParser {
     }
 
 // 接口 ---------------------------------------
-    public ParameterListener parameterListener;
+    private ParameterListener parameterListener;
     public void setParameterListener(ParameterListener parameterListener){
         this.parameterListener = parameterListener;
     }
